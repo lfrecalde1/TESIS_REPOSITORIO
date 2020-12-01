@@ -1,4 +1,8 @@
 #!/bin/bash
+export WORKON_HOME=/home/fer/.virtualenvs
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+source /usr/local/bin/virtualenvwrapper.sh
+
 cd ~
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 
@@ -29,5 +33,5 @@ pip install rospkg
 
 pip install PyYAML
 
-
+mkvirtualenv cv -p python3
 
