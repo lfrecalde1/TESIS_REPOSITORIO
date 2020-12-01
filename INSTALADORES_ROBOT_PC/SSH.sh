@@ -10,6 +10,8 @@ sudo dpkg-reconfigure openssh-server
 
 ls -l /dev/ttyACM*
 
+sudo usermod -a -G dialout robot
+
 <<<<<<< HEAD
 sudo usermod -a -G dialout robot
 =======
