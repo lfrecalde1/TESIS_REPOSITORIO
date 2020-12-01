@@ -6,3 +6,5 @@ sudo systemctl enable ssh
 
 sudo service ssh restart
 
+sudo dpkg-reconfigure openssh-server
+
