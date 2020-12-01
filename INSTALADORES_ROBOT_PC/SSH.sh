@@ -8,3 +8,6 @@ sudo service ssh restart
 
 sudo dpkg-reconfigure openssh-server
 
+ls -l /dev/ttyACM*
+
+sudo usermod -a -G dialout osboxes
