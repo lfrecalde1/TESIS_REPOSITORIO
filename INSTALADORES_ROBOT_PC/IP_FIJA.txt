@@ -1,0 +1,23 @@
+# para asignar una ip fija se debe vericar la ip q esta asignada en el dispositivo
+# ejecutar el siguiente comando en teminal
+ip addr
+# para mostrar la ip del router ejecutar el siguiente comando
+ip route show
+# para asignar la ip fija  se debe ejecutar el siguiente comando
+sudo nano /etc/netplan/
+# copiar lo siguiente en el unico archivo q se encuentra en esta carpeta
+
+network:
+ version: 2
+ renderer: networkd
+ ethernets:
+   wlan0:
+     dhcp4: no
+     dhcp6: no
+     addresses: [192.168.0.200/24]
+     gateway4: 192.168.0.1
+     nameservers:
+        addresses: [192.168.0.1,8.8.8.8]
+
+# finalmente ejecutar el siguiente comando para efecutrar los cambios
+sudo netplan --debug apply
