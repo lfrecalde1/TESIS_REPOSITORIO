@@ -4,8 +4,8 @@
 
 %% PARAMETROS DE TIEMPO
 clc,clear all,close all;
-ts=0.1;
-tf=30;
+ts=0.2;
+tf=20;
 to=0;
 t=[to:ts:tf];
 
@@ -23,6 +23,7 @@ rosinit
 robot = rospublisher('/cmd_vel');
 velmsg = rosmessage(robot);
 odom = rossubscriber('/odom');
+lidarSub = rossubscriber('/scan');
 
 %% LECTURA DEL ROBOT PARA CONDICIONES INICIALES
 odomdata = receive(odom,3);
@@ -57,16 +58,33 @@ hyd=0.4*sin(0.3*t);
 
 hxdp=-0.4*0.3*sin(0.3*t);
 hydp=0.4*0.3*cos(0.3*t);
-
-%% GANANCIAS DEL CONTROLADOR CINEMATICO
+%% GANANCIASfigure DEL CONTROLADOR CINEMATICO
 KP=1; 
 
 %% GANANCIA PARA LOS ACTUADORES
-K2=1; 
+K2=0.5; 
+
+%% FUERZA DE INTERACCION CON EL OBJETO 
+
+F_1=0;
+F_2=0;
+xa_1=0;
+xa_2=0;
 
 %% BUCLE DE SIMULACION 
 for k=1:length(t)
     tic;
+    %% TOMA DE DATOS DESDE LIDAR
+
+    
+    [F(k),angulo(k),d]=evasion_obstaculos(lidarSub);
+    
+    F(k),angulo(k),d
+    
+    [xa(k),xa_1,xa_2,F_1,F_2] = impedancia_1(F(k),F_1,F_2,xa_1,xa_2);
+    
+    %% ROTACION DEL PUNTO DESEADO
+    %[hxd(k),hyd(k),hxdp(k),hydp(k)]=ROTACION_REFERENCIA(hxd(k),hyd(k),hxdp(k),hydp(k),xa(k));
     %% ERROR DE CONTROL
     hxe(k)=hxd(k)-hx(k);
     
@@ -109,7 +127,7 @@ for k=1:length(t)
     wref(k)=Dinamica(2);
      
     %% ENVIO DE DATOS AL ROBOT
-    velmsg.Linear.X =uref(k);
+    velmsg.Linear.X = uref(k);
     velmsg.Angular.Z =wref(k);
     send(robot,velmsg);
     
@@ -135,12 +153,11 @@ for k=1:length(t)
      
     hx(k+1)=pose.Position.X+a*cos(phi(k+1));
     hy(k+1)=pose.Position.Y+a*sin(phi(k+1));
-        
+    
     while(toc<ts)
     end
     t_sample(k)=toc;
 
-    
 end
 %% DETENER A LA PALTAFORMA MOVIL
 velmsg.Linear.X = 0;
@@ -150,11 +167,22 @@ rosshutdown;
 
 %% GRAFICAS DEL SISTEMA
 figure
+plot(t,F,'-r')
+hold on 
+grid on
+plot(t,xa,'-g')
+
+figure
+plot(t,angulo,'-r')
+grid on
+hold on
+
+figure
 set(gcf, 'PaperUnits', 'inches');
 set(gcf, 'PaperSize', [4 2]);
 set(gcf, 'PaperPositionMode', 'manual');
 set(gcf, 'PaperPosition', [0 0 10 4]);
-plot(hxd,hyd,'--','Color',[56,171,217]/255,'linewidth',1.5); hold on;
+plot(hxd,hyd,'*','Color',[56,171,217]/255,'linewidth',1.5); hold on;
 plot(hx,hy,'Color',[32,185,29]/255,'linewidth',1.5); hold on;
 grid on;
 grid minor;
