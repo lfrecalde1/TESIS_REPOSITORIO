@@ -22,4 +22,4 @@ network:
 # finalmente ejecutar el siguiente comando para efecutrar los cambios
 sudo netplan --debug apply
 
-# eso es todo
+# eso 
