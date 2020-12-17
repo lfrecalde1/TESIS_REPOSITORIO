@@ -73,7 +73,7 @@ xa_2=0;
 
 %% COMPONENTES DE LA LEY DE PARAMETROS ADAPTATIVOS
 chi_real=x'*ones(1,length(t));
-chi_estimado(:,1)=x*0;
+chi_estimado(:,1)=x;
 
 %% BUCLE DE SIMULACION 
 for k=1:length(t)
@@ -264,7 +264,7 @@ plot(t,chi_estimado(:,1:length(t)),'-','linewidth',1);
 grid on;
 grid minor;
 hold on;
-plot(t,chi_real,'--','linewidth',1);
+plot(t,chi+REAL,'--','linewidth',1);
 title('$\textrm{Parametros Adaptativos}$','Interpreter','latex','FontSize',9);
 legend({'$\chi_e$','$\chi$'},'Interpreter','latex','FontSize',9);
 xlabel('$\textrm{Tiempo}[s]$','Interpreter','latex','FontSize',9); ylabel('$\textrm{Parametros}$','Interpreter','latex','FontSize',9);

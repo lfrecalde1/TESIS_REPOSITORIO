@@ -16,9 +16,9 @@ chi_estimado=PARAMETROS_ESTIMADOS;
 %% ERROR DE PARAMETROS D ELA DINAMICA
  error_chi=chi_estimado-chi_real;
  
-CHI=10*eye(7);
+CHI=0.5*eye(7);
 H=1*eye(2);
-T=10*eye(7); 
+T=1*eye(7); 
 % c) Parámetros Dinámicos de la plataforma movil
 
      C1=PARAMETROS(1);
@@ -51,7 +51,7 @@ T=10*eye(7);
 % f) MatrizCompensacion Dinamica.
 K3=1*diag([1 1]);
 
-K4=1*diag([1 1]);
+K4=0.5*diag([1 1]);
 
 % h) Modelo para compensación dinámica 
     control=vrefp+K4*tanh((K4^(-1))*K3*vref_e);
