@@ -4,8 +4,8 @@
 
 %% PARAMETROS DE TIEMPO
 clc,clear all,close all;
-ts=0.1;
-tf=30;
+ts=0.05;
+tf=20;
 to=0;
 t=[to:ts:tf];
 
@@ -16,7 +16,7 @@ PARAMETROS=x;
 %% INICIALIZACION DE LA COMUNICACION CON ROS
 rosshutdown
 setenv('ROS_MASTER_URI','http://192.168.0.104:11311');
-setenv('ROS_IP','192.168.0.102');
+setenv('ROS_IP','192.168.0.103');
 rosinit
 
 %% ENLACE A LOS TOPICOS DE ROS NECESARIOS
@@ -53,11 +53,11 @@ hxp(1)=u(1)*cos(phi(1))-a*w(1)*sin(phi(1));
 hyp(1)=u(1)*sin(phi(1))+a*w(1)*cos(phi(1));
 
 %% TRAYECTORIA DESEADAS
-hxd=0.0*cos(0.3*t);
-hyd=0.0*sin(0.3*t);
+hxd=0.3*cos(0.3*t);
+hyd=0.3*sin(0.3*t);
 
-hxdp=-0.0*0.3*sin(0.3*t);
-hydp=0.0*0.3*cos(0.3*t);
+hxdp=-0.3*0.3*sin(0.3*t);
+hydp=0.3*0.3*cos(0.3*t);
 
 %% RESTRICCION PARA LAS ACCIONES DE CONTROL
 lb = [-0.2,-2.55]';

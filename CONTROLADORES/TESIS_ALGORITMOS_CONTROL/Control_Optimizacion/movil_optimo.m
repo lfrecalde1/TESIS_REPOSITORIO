@@ -26,11 +26,16 @@ function [L] = movil_optimo(z,H,hd,hd1,h,q,l,ts)
          j21 j22];
     
 %2) Posiciones deseados k+1    
-    hk1 = ts*J*v_1+h; 
+    hk1 = ts*J*v_1+h;
+    
     R=[0.2,0;0,0.2];
+    
     error_1=hd-h;
+    
     error=hd1-hk1;
+    
     rate_error=error-error_1;
+    
 %3) Integraci�n del Funcional        
     L = rate_error'*H*rate_error+error'*R*error; %Trapecio
 end
