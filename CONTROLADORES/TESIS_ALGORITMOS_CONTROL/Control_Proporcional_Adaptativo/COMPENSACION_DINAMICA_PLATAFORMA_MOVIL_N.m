@@ -1,4 +1,4 @@
-function Dinamica = COMPENSACION_DINAMICA_PLATAFORMA_MOVIL_N(vrefp,vref_e,v,q,ts,PARAMETROS)
+function Dinamica = COMPENSACION_DINAMICA_PLATAFORMA_MOVIL_N(vrefp,vref_e,v,q,ts,PARAMETROS,PARAMETROS_ESTIMADOS)
 
 
 % a) Velocidades de la plataforma móvil y del brazo robótico
@@ -8,7 +8,17 @@ function Dinamica = COMPENSACION_DINAMICA_PLATAFORMA_MOVIL_N(vrefp,vref_e,v,q,ts
      
 % b) Estados de la plataforma móvil y del brazo robótico
      ths = q(2);
+     
+%% PARAMETROS PARA LA ADAPTACION DE LA DINAMICA
+chi_real=PARAMETROS;
+chi_estimado=PARAMETROS_ESTIMADOS;
 
+%% ERROR DE PARAMETROS D ELA DINAMICA
+ error_chi=chi_estimado-chi_real;
+ 
+CHI=10*eye(7);
+H=1*eye(2);
+T=10*eye(7); 
 % c) Parámetros Dinámicos de la plataforma movil
 
      C1=PARAMETROS(1);
@@ -41,14 +51,20 @@ function Dinamica = COMPENSACION_DINAMICA_PLATAFORMA_MOVIL_N(vrefp,vref_e,v,q,ts
 % f) MatrizCompensacion Dinamica.
 K3=1*diag([1 1]);
 
-K4=0.5*diag([1 1]);
+K4=1*diag([1 1]);
 
 % h) Modelo para compensación dinámica 
-    vref= M*(vrefp+K4*tanh((K4^(-1))*K3*vref_e))+C*v;
-    us = vref(1);
-    ws = vref(2);
-
-    v_1 = [us ws]';
+    control=vrefp+K4*tanh((K4^(-1))*K3*vref_e);
+    
+    n=[control(1),0,us,ws,ws^2,0,0;...
+       0,control(2),0,0,0,us*ws,ws];
    
-    Dinamica = [v_1];
+  DI= n*chi_real+n*error_chi;
+   
+  chi_p=inv(CHI)*n'*H*vref_e-inv(CHI)*T*error_chi;
+    %chi_p=inv(CHI)*n'*H*vref_e;
+  chi_estimado=chi_estimado+chi_p*ts;
+  
+  
+    Dinamica = [DI;chi_estimado]
 end

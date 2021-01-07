@@ -15,8 +15,8 @@ PARAMETROS=x;
 
 %% INICIALIZACION DE LA COMUNICACION CON ROS
 rosshutdown
-setenv('ROS_MASTER_URI','http://192.168.0.104:11311');
-setenv('ROS_IP','192.168.0.103');
+setenv('ROS_MASTER_URI','http://192.168.100.20:11311');
+setenv('ROS_IP','192.168.100.20');
 rosinit
 
 %% ENLACE A LOS TOPICOS DE ROS NECESARIOS
@@ -53,11 +53,11 @@ hxp(1)=u(1)*cos(phi(1))-a*w(1)*sin(phi(1));
 hyp(1)=u(1)*sin(phi(1))+a*w(1)*cos(phi(1));
 
 %% TRAYECTORIA DESEADAS
-hxd=0.3*cos(0.3*t);
-hyd=0.3*sin(0.3*t);
+hxd=0.4*cos(0.3*t);
+hyd=0.4*sin(0.3*t);
 
-hxdp=-0.3*0.3*sin(0.3*t);
-hydp=0.3*0.3*cos(0.3*t);
+hxdp=-0.4*0.3*sin(0.3*t);
+hydp=0.4*0.3*cos(0.3*t);
 %% GANANCIASfigure DEL CONTROLADOR CINEMATICO
 KP=1; 
 
@@ -71,6 +71,9 @@ F_2=0;
 xa_1=0;
 xa_2=0;
 
+%% COMPONENTES DE LA LEY DE PARAMETROS ADAPTATIVOS
+chi_real=x'*ones(1,length(t));
+chi_estimado(:,1)=x*0;
 
 %% BUCLE DE SIMULACION 
 for k=1:length(t)
@@ -118,12 +121,14 @@ for k=1:length(t)
     v=[uref_c(k) wref_c(k)]';
     
     %% COMPENSACION DINAMICA PLATAFORMA MOVIL
-    Dinamica = COMPENSACION_DINAMICA_PLATAFORMA_MOVIL_N(vrefp,vref_e,v,q,ts,PARAMETROS);
-    
+    Dinamica = COMPENSACION_DINAMICA_PLATAFORMA_MOVIL_N(vrefp,vref_e,v,q,ts,chi_real(:,k),chi_estimado(:,k));
+     
     %% DINAMICA DE LA PLATAFORMA MOVIL
     uref(k)=Dinamica(1);
     wref(k)=Dinamica(2);
-
+    chi(:,k)=Dinamica(3:end,1);
+    %% COMPENSACION DINAMICA ADPTATIVA USAR SOLO SI SE REQUIERE
+    chi_estimado(:,k+1)=Dinamica(3:end,1);
     %% ENVIO DE DATOS AL ROBOT
     velmsg.Linear.X = uref(k);
     velmsg.Angular.Z =wref(k);
@@ -250,3 +255,18 @@ set(gcf, 'PaperPosition', [0 0 10 4]);
 
 print -dpng CONTROL_VALUES_1_PROPORCIONAL
 print -depsc CONTROL_VALUES_1_PROPORCIONAL
+figure
+set(gcf, 'PaperUnits', 'inches');
+set(gcf, 'PaperSize', [4 2]);
+set(gcf, 'PaperPositionMode', 'manual');
+set(gcf, 'PaperPosition', [0 0 10 4]);
+plot(t,chi_estimado(:,1:length(t)),'-','linewidth',1);
+grid on;
+grid minor;
+hold on;
+plot(t,chi_real,'--','linewidth',1);
+title('$\textrm{Parametros Adaptativos}$','Interpreter','latex','FontSize',9);
+legend({'$\chi_e$','$\chi$'},'Interpreter','latex','FontSize',9);
+xlabel('$\textrm{Tiempo}[s]$','Interpreter','latex','FontSize',9); ylabel('$\textrm{Parametros}$','Interpreter','latex','FontSize',9);
+print -dpng PARAMETROS
+print -depsc PARAMETROS
