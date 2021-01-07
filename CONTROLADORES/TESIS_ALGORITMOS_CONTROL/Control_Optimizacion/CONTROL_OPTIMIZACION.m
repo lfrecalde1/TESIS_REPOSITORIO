@@ -15,8 +15,8 @@ PARAMETROS=x;
 
 %% INICIALIZACION DE LA COMUNICACION CON ROS
 rosshutdown
-setenv('ROS_MASTER_URI','http://192.168.0.104:11311');
-setenv('ROS_IP','192.168.0.103');
+setenv('ROS_MASTER_URI','http://192.168.100.20:11311');
+setenv('ROS_IP','192.168.100.20');
 rosinit
 
 %% ENLACE A LOS TOPICOS DE ROS NECESARIOS
@@ -29,7 +29,8 @@ odomdata = receive(odom,3);
 pose = odomdata.Pose.Pose;
 vel=odomdata.Twist.Twist;
 quat = pose.Orientation;
-angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
+%angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
+angles=pose.Orientation.Z;
 
 %% DISTANCIA HACIA EL PUNTO DE INTERES
 a=0.1;
@@ -126,7 +127,8 @@ for k=1:length(t)-1
     odomdata = receive(odom,3);
     pose = odomdata.Pose.Pose;
     quat = pose.Orientation;
-    angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
+    %angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
+    angles=pose.Orientation.Z;
     
     %% LECTURA DE LAS VELOCIDADES DE CONTROL REALES DEL ROBOT
     vel=odomdata.Twist.Twist;

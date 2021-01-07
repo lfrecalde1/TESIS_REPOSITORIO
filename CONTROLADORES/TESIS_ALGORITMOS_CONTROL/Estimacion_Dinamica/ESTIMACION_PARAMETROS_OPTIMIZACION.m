@@ -87,8 +87,9 @@ set(gcf, 'PaperPosition', [0 0 10 4]);
     plot(t,u_sal(1:length(t)),'Color',[226,76,44]/255,'linewidth',1); hold on
     plot(t,uref_c,'Color',[46,188,89]/255,'linewidth',1); hold on
     plot(t,va(1,1:length(UREF)),'Color',[83,57,217]/255,'linewidth',1); hold on
-    grid on
-    title('$\textrm{Validacion}$','Interpreter','latex','FontSize',9);
+    grid on;
+    grid minor;
+    %title('$\textrm{Validacion}$','Interpreter','latex','FontSize',9);
     legend({'$\mu$','$\mu_{ref}$','$\mu_{m}$'},'Interpreter','latex','FontSize',11,'Orientation','horizontal');
     legend('boxoff')
     ylabel('$[m/s]$','Interpreter','latex','FontSize',9);
@@ -99,6 +100,6 @@ set(gcf, 'PaperPosition', [0 0 10 4]);
     grid on
     legend({'$\dot\psi$','$\dot\psi_{ref}$','$\dot\psi_{m}$'},'Interpreter','latex','FontSize',11,'Orientation','horizontal');
     legend('boxoff')
-    xlabel('$\textrm{Timpo}[s]$','Interpreter','latex','FontSize',9);ylabel('$[rad/s]$','Interpreter','latex','FontSize',9);
+    xlabel('$\textrm{Time}[s]$','Interpreter','latex','FontSize',9);ylabel('$[rad/s]$','Interpreter','latex','FontSize',9);
 print -dpng VALIDATION_OPTIMIZACION
 print -depsc VALIDATION_OPTIMIZACION

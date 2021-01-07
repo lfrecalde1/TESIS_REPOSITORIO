@@ -4,7 +4,7 @@
 
 %% PARAMETROS DE TIEMPO
 clc,clear all,close all;
-ts=0.1;
+ts=0.05;
 tf=30;
 to=0;
 t=[to:ts:tf];
@@ -15,8 +15,8 @@ PARAMETROS=x;
 
 %% INICIALIZACION DE LA COMUNICACION CON ROS
 rosshutdown
-setenv('ROS_MASTER_URI','http://192.168.0.104:11311');
-setenv('ROS_IP','192.168.0.102');
+setenv('ROS_MASTER_URI','http://192.168.100.20:11311');
+setenv('ROS_IP','192.168.100.20');
 rosinit
 
 %% ENLACE A LOS TOPICOS DE ROS NECESARIOS
@@ -29,7 +29,8 @@ odomdata = receive(odom,3);
 pose = odomdata.Pose.Pose;
 vel=odomdata.Twist.Twist;
 quat = pose.Orientation;
-angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
+%angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
+angles=pose.Orientation.Z;
 
 %% DISTANCIA HACIA EL PUNTO DE INTERES
 a=0.1;
@@ -52,11 +53,11 @@ hxp(1)=u(1)*cos(phi(1))-a*w(1)*sin(phi(1));
 hyp(1)=u(1)*sin(phi(1))+a*w(1)*cos(phi(1));
 
 %% TRAYECTORIA DESEADAS
-hxd=0.4*cos(0.3*t);
-hyd=0.4*sin(0.3*t);
+hxd=0.5*sin(0.3*t);
+hyd=0.5*cos(0.3*t);
 
-hxdp=-0.4*0.3*sin(0.3*t);
-hydp=0.4*0.3*cos(0.3*t);
+hxdp=0.5*0.3*cos(0.3*t);
+hydp=-0.5*0.3*sin(0.3*t);
 
 %% GANANCIA PARA LOS ACTUADORES
 K2=1; 
@@ -148,7 +149,8 @@ for k=1:length(t)
     odomdata = receive(odom,3);
     pose = odomdata.Pose.Pose;
     quat = pose.Orientation;
-    angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
+    %angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
+    angles=pose.Orientation.Z;
     
     %% LECTURA DE LAS VELOCIDADES DE CONTROL REALES DEL ROBOT
     vel=odomdata.Twist.Twist;
@@ -173,7 +175,12 @@ for k=1:length(t)
     [phi_estimado(k+1),JACOBIANO_PHI,zjo,zjo_1,zjo_2,zij,zij_1,zij_2] = NEURONAL_LINEA(phi(k+1),uref_c(k),wref_c(k),N3,xite_3,alfa_3,zjo,zij,zjo_1,zij_1,zjo_2,zij_2);
     ACTUALIZACION=NEURONAL_ADAPTATIVO(JACOBIANO_X,JACOBIANO_Y,h,hd,phi(k+1),a);
     chi(:,k+1)=chi(:,k)-ACTUALIZACION;
-    
+    if(chi(1,k+1)<=0.1)
+        chi(1,k+1)=0.1;
+    end
+    if(chi(2,k+1)<=0.1)
+        chi(2,k+1)=0.1;
+    end
     while(toc<ts)
     end
     t_sample(k)=toc;
@@ -196,9 +203,9 @@ plot(hxd,hyd,'--','Color',[56,171,217]/255,'linewidth',1.5); hold on;
 plot(hx,hy,'Color',[32,185,29]/255,'linewidth',1.5); hold on;
 grid on;
 grid minor;
-legend({'$\mathbf{\eta}_{p_{des}}$','$\mathbf{\eta}_{p}$'},'Interpreter','latex','FontSize',11,'Orientation','horizontal');
+legend({'$\mathbf{\eta}_{{d}}$','$\mathbf{\eta}$'},'Interpreter','latex','FontSize',11,'Orientation','horizontal');
 legend('boxoff')
-title('$\textrm{Trayectoria Deseada y Trayectoria Descrita}$','Interpreter','latex','FontSize',9);
+%title('$\textrm{Trayectoria Deseada y Trayectoria Descrita}$','Interpreter','latex','FontSize',9);
 xlabel('$\textrm{X}[m]$','Interpreter','latex','FontSize',9); ylabel('$\textrm{Y}[m]$','Interpreter','latex','FontSize',9)
 
 print -dpng SIMULATION_1_NEURONAL
@@ -216,7 +223,7 @@ subplot(2,1,1)
     grid minor;
     legend({'$\tilde{x_{p}}$','$\tilde{y_{p}}$'},'Interpreter','latex','FontSize',11,'Orientation','horizontal');
     legend('boxoff')
-    title('$\textrm{Errores de Posicion}$','Interpreter','latex','FontSize',9);
+    %title('$\textrm{Errores de Posicion}$','Interpreter','latex','FontSize',9);
     ylabel('$[m]$','Interpreter','latex','FontSize',9);
   
 subplot(2,1,2)
@@ -224,10 +231,10 @@ subplot(2,1,2)
     plot(t,we,'Color',[56,171,217]/255,'linewidth',1); hold on
     grid on;
     grid minor;
-    legend({'$\tilde\mu$','$\tilde{\dot\psi_{p}}$'},'Interpreter','latex','FontSize',11,'Orientation','horizontal');
+    legend({'$\tilde\mu$','$\tilde{\dot\psi_{}}$'},'Interpreter','latex','FontSize',11,'Orientation','horizontal');
     legend('boxoff')
-    title('$\textrm{Errores de Velocidad}$','Interpreter','latex','FontSize',9);
-    xlabel('$\textrm{Tiempo}[s]$','Interpreter','latex','FontSize',9);ylabel('$[m/s][rad/s]$','Interpreter','latex','FontSize',9);
+    %title('$\textrm{Errores de Velocidad}$','Interpreter','latex','FontSize',9);
+    xlabel('$\textrm{Time}[s]$','Interpreter','latex','FontSize',9);ylabel('$[m/s][rad/s]$','Interpreter','latex','FontSize',9);
 
     
 print -dpng CONTROL_ERRORS_1_NEURONAL
@@ -245,9 +252,10 @@ set(gcf, 'PaperPosition', [0 0 10 4]);
     plot(t,wref_c,'--','Color',[129,123,110]/255,'linewidth',1); hold on
     grid on;
     grid minor;
-    title('$\textrm{Velocidades a la Salida del Robot y Velocidades de Control Cinematico}$','Interpreter','latex','FontSize',9);
-    xlabel('$\textrm{Tiempo}[s]$','Interpreter','latex','FontSize',9);ylabel('$[m/s][rad/s]$','Interpreter','latex','FontSize',9);
-    legend({'$\mu$','$\dot\psi_{p}$','$\mu_{ref_{c}}$','$\dot\psi_{p_{ref_{c}}}$'},'Interpreter','latex','FontSize',11,'Orientation','horizontal');
+    %title('$\textrm{Velocidades a la Salida del Robot y Velocidades de Control Cinematico}$','Interpreter','latex','FontSize',9);
+    %xlabel('$\textrm{Tiempo}[s]$','Interpreter','latex','FontSize',9);
+    ylabel('$[m/s][rad/s]$','Interpreter','latex','FontSize',9);
+    legend({'$\mu$','$\dot\psi_{}$','$\mu_{{c}}$','$\dot\psi_{{{c}}}$'},'Interpreter','latex','FontSize',11,'Orientation','horizontal');
     legend('boxoff')
     
     subplot(2,1,2)
@@ -255,10 +263,10 @@ set(gcf, 'PaperPosition', [0 0 10 4]);
     plot(t,wref,'Color',[83,57,217]/255,'linewidth',1); grid on
     grid on;
     grid minor;
-    legend({'$\mu_{ref}$','$\dot\psi_{p_{ref}}$'},'Interpreter','latex','FontSize',11,'Orientation','horizontal');
+    legend({'$\mu_{ref}$','$\dot\psi_{{ref}}$'},'Interpreter','latex','FontSize',11,'Orientation','horizontal');
     legend('boxoff')
-    title('$\textrm{Velocidades de Compensacion Dinamica}$','Interpreter','latex','FontSize',9);
-    xlabel('$\textrm{Tiempo }[s]$','Interpreter','latex','FontSize',9);;ylabel('$[m/s][rad/s]$','Interpreter','latex','FontSize',9);
+    %title('$\textrm{Velocidades de Compensacion Dinamica}$','Interpreter','latex','FontSize',9);
+    xlabel('$\textrm{Time}[s]$','Interpreter','latex','FontSize',9);;ylabel('$[m/s][rad/s]$','Interpreter','latex','FontSize',9);
 
 print -dpng CONTROL_VALUES_1_NEURONAL
 print -depsc CONTROL_VALUES_1_NEURONAL
@@ -273,7 +281,7 @@ subplot(3,1,1)
     plot(t,hx_estimado(1:length(t)),'--','Color',[83,57,217]/255,'linewidth',1); hold on
     grid on;
     grid minor;
-    title('$\textrm{Posicion y Orientacion Estimacion}$','Interpreter','latex','FontSize',9);
+    %title('$\textrm{Posicion y Orientacion Estimacion}$','Interpreter','latex','FontSize',9);
     legend({'$x$','$\bar{x}$'},'Interpreter','latex','FontSize',11,'Orientation','horizontal');
     legend('boxoff')
     ylabel('$\textrm{X}[m]$','Interpreter','latex','FontSize',9);
@@ -310,7 +318,8 @@ set(gcf, 'PaperPosition', [0 0 10 4]);
 subplot(2,1,1)
 plot(t,chi(1,1:length(t)),'Color',[83,57,217]/255,'linewidth',1);
 grid on;
-title('$\textrm{Evolucion de las Ganancias}$','Interpreter','latex','FontSize',9);
+grid minor;
+%title('$\textrm{Evolucion de las Ganancias}$','Interpreter','latex','FontSize',9);
 legend({'$K_{x}$'},'Interpreter','latex','FontSize',11,'Orientation','horizontal');
 legend('boxoff')
 ylabel('$K_x$','Interpreter','latex','FontSize',9);
@@ -318,12 +327,12 @@ ylabel('$K_x$','Interpreter','latex','FontSize',9);
 subplot(2,1,2)
 plot(t,chi(2,1:length(t)),'Color',[56,171,217]/255,'linewidth',1.5);
 grid on;
-grid on;
+grid minor;
 %title('$\textrm{Adaptative Gains Evolution}$','Interpreter','latex','FontSize',9);
 legend({'$K_{y}$'},'Interpreter','latex','FontSize',11,'Orientation','horizontal');
 legend('boxoff')
 ylabel('$K_y$','Interpreter','latex','FontSize',9);
-xlabel('$\textrm{Time }[s]$','Interpreter','latex','FontSize',9)
+xlabel('$\textrm{Time}[s]$','Interpreter','latex','FontSize',9)
 
 print -dpng PARAMETROS_ADAPTATIVOS
 print -depsc PARAMETROS_ADAPTATIVOS
