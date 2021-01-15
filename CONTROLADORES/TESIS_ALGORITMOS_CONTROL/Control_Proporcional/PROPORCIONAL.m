@@ -10,5 +10,5 @@ function cinematico= PROPORCIONAL(K1,K2,hd,hdp,h,q,a)
      J=[J11 J12;
         J21 J22];
      %% LEY DE CONTROL SEGUIMIENTO DE TRAYECTORIA
-     cinematico=inv(J)*(hdp+K2*tanh(K2^(-1)*K1*he));
+     cinematico=inv(J)*(hdp+K2*tanh(inv(K2)*K1*he));
 end

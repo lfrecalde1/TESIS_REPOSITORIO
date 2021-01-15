@@ -28,7 +28,8 @@ landa=5;%lambda
 
 F1=tf(landa,[1 landa]);
 
-
+size(t)
+size(U)
 U=lsim(F1,U,t);
 W=lsim(F1,W,t);
 
@@ -38,7 +39,7 @@ WP=lsim(F1,WP,t);
 UREF=lsim(F1,UREF,t);
 WREF=lsim(F1,WREF,t);
 
-x0=zeros(1,7)+0.5;
+x0=zeros(1,7)+0.1;
 
 options = optimoptions('fminunc','Display','iter',...
     'Algorithm','quasi-newton','TolFun',1e-20,'TolX',1e-20,...
@@ -54,7 +55,7 @@ va(2,1)=0;
 
 for i=1:length(UREF)
     vref=[uref_c(i);wref_c(i)];
-%     v=[uref_c(i);wref_c(i)];
+    v=[uref_c(i);wref_c(i)];
  % d) Matriz de Inercia
      M11 = x(1);
      M12 = 0;
@@ -77,7 +78,7 @@ for i=1:length(UREF)
 
     %Dinamica
    vp = pinv(M)*(vref-C*va(:,i));
-   va(:,i+1)=vp*ts+va(:,i);
+    va(:,i+1)=vp*ts+va(:,i);
     
 end
 %% GRAFICAS DEL SISTEMA
@@ -106,12 +107,23 @@ set(gcf, 'PaperPosition', [0 0 10 4]);
     xlabel('$\textrm{Time}[s]$','Interpreter','latex','FontSize',9);ylabel('$[rad/s]$','Interpreter','latex','FontSize',9);
 print -dpng VALIDATION_OPTIMIZACION
 print -depsc VALIDATION_OPTIMIZACION
-
+u_sal_k1=0;
+for j=1:length(UREF)
+    u_sal_k=u_sal(j);
+    up_sal_k=(u_sal_k-u_sal_k1)/ts;
+    veri(j)=up_sal_k;
+    u_sal_k1=u_sal_k;
+    
+end
+    
 figure
-plot(up_sal)
+plot(U,'r')
 hold on
-plot(UP)
+grid on
+plot(u_sal,'--r')
 figure
-plot(u_sal,'r')
+plot(UP,'b')
 hold on
-plot(U,'b')
+grid on
+plot(up_sal,'--b')
+plot(veri,'--r')

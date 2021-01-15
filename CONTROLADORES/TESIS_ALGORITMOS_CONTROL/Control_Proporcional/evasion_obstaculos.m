@@ -10,6 +10,7 @@ data=readCartesian(scanMsg);
 
 x=data(:,1);
 y=data(:,2);
+
 dist=sqrt(x.^2+y.^2);
 
 [minDist,j]=min(dist);

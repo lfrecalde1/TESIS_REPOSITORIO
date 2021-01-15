@@ -4,8 +4,8 @@
 
 %% PARAMETROS DE TIEMPO
 clc,clear all,close all;
-ts=0.1;
-tf=15;
+ts=0.05;
+tf=20;
 to=0;
 t=[to:ts:tf];
 
@@ -56,13 +56,13 @@ hyp(1)=u(1)*sin(phi(1))+a*w(1)*cos(phi(1));
 hxd=0.3*cos(0.3*t);
 hyd=0.3*sin(0.3*t);
 
-hxdp=-0.3*0.3*sin(0.3*t);
-hydp=0.3*0.3*cos(0.3*t);
+hxdp=[0 diff(hxd)/ts];
+hydp=[0 diff(hyd)/ts];
 %% GANANCIASfigure DEL CONTROLADOR CINEMATICO
 KP=1; 
 
 %% GANANCIA PARA LOS ACTUADORES
-K2=0.5; 
+K2=1; 
 
 %% FUERZA DE INTERACCION CON EL OBJETO 
 
@@ -71,7 +71,8 @@ F_2=0;
 xa_1=0;
 xa_2=0;
 
-
+%% PARAMETROS ADAPTATIVOS
+chi=zeros(6,length(t));
 %% BUCLE DE SIMULACION 
 for k=1:length(t)
     tic;
@@ -115,14 +116,15 @@ for k=1:length(t)
     vrefp_u=diff([uref_c uref_c(end)])/ts;
     vrefp_w=diff([wref_c wref_c(end)])/ts;
     vrefp=[vrefp_u(k) vrefp_w(k)]';
-    v=[uref_c(k) wref_c(k)]';
-    
+    vd=[uref_c(k) wref_c(k)]';
+    v=[u(k) w(k)];
     %% COMPENSACION DINAMICA PLATAFORMA MOVIL
-    Dinamica = COMPENSACION_DINAMICA_PLATAFORMA_MOVIL_N(vrefp,vref_e,v,q,ts,PARAMETROS);
-    
+%     Dinamica = COMPENSACION_DINAMICA_PLATAFORMA_MOVIL_N(vrefp,vref_e,vd,q,ts,PARAMETROS);
+    Dinamica=Adaptativo_1(vrefp,vref_e,v,vd,chi(:,k),ts);
     %% DINAMICA DE LA PLATAFORMA MOVIL
     uref(k)=Dinamica(1);
     wref(k)=Dinamica(2);
+    chi(:,k+1)=Dinamica(3:8,1);
 
     %% ENVIO DE DATOS AL ROBOT
     velmsg.Linear.X = uref(k);
@@ -250,3 +252,18 @@ set(gcf, 'PaperPosition', [0 0 10 4]);
 
 print -dpng CONTROL_VALUES_1_PROPORCIONAL
 print -depsc CONTROL_VALUES_1_PROPORCIONAL
+
+figure
+set(gcf, 'PaperUnits', 'inches');
+set(gcf, 'PaperSize', [4 2]);
+set(gcf, 'PaperPositionMode', 'manual');
+set(gcf, 'PaperPosition', [0 0 10 4]);
+plot(t,chi(:,1:length(t)),'linewidth',1);
+hold on
+grid on
+%plot(t(1:length(chi_real)),chi_real,'--','linewidth',1);
+title('$\textrm{Adaptative Parameters}$','Interpreter','latex','FontSize',9);
+legend({'$\chi_e$'},'Interpreter','latex','FontSize',9);
+xlabel('$\textrm{Time}[s]$','Interpreter','latex','FontSize',9); ylabel('$\textrm{Parameters}$','Interpreter','latex','FontSize',9);
+print -dpng PARAMETROS
+print -depsc PARAMETROS

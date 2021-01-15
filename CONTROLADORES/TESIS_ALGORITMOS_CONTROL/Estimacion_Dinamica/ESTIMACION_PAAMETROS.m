@@ -7,7 +7,7 @@ load('IDENTIFICACION_DATOS');
 t=[1:ts:tfinal-ts];
 
 To=ts; 
-land =3; 
+land =15; 
 
 u=[t-1;u(1:length(t))]';
 w=[t-1;w(1:length(t))]';

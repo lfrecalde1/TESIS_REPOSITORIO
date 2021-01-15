@@ -27,7 +27,10 @@ function Dinamica = MOVIL_DINAMICA(vref,v,ts,PARAMETROS)
     
      M21 = 0;
      M22 = C2;
-    
+     
+   
+     
+     
      M = [M11 M12;
           M21 M22];
  
@@ -37,6 +40,8 @@ function Dinamica = MOVIL_DINAMICA(vref,v,ts,PARAMETROS)
     
      Cs21 =C6*ws;
      Cs22 =C7;
+     
+    
      
      C = [Cs11 Cs12;
           Cs21 Cs22];
