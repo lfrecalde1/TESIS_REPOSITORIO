@@ -4,7 +4,7 @@
 
 %% PARAMETROS DE TIEMPO
 clc,clear all,close all;
-ts=0.05;
+ts=0.1;
 tf=20;
 to=0;
 t=[to:ts:tf];
@@ -15,8 +15,8 @@ PARAMETROS=x;
 
 %% INICIALIZACION DE LA COMUNICACION CON ROS
 rosshutdown
-setenv('ROS_MASTER_URI','http://192.168.100.20:11311');
-setenv('ROS_IP','192.168.100.20');
+setenv('ROS_MASTER_URI','http://192.168.0.104:11311');
+setenv('ROS_IP','192.168.0.103');
 rosinit
 
 %% ENLACE A LOS TOPICOS DE ROS NECESARIOS
@@ -29,8 +29,8 @@ odomdata = receive(odom,3);
 pose = odomdata.Pose.Pose;
 vel=odomdata.Twist.Twist;
 quat = pose.Orientation;
-%angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
-angles=pose.Orientation.Z;
+angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
+% angles=pose.Orientation.Z;
 
 %% DISTANCIA HACIA EL PUNTO DE INTERES
 a=0.1;
@@ -54,12 +54,13 @@ hxp(1)=u(1)*cos(phi(1))-a*w(1)*sin(phi(1));
 hyp(1)=u(1)*sin(phi(1))+a*w(1)*cos(phi(1));
 
 %% TRAYECTORIA DESEADAS
-hxd=0.3*cos(0.3*t);
-hyd=0.3*sin(0.3*t);
+hxd=0.0*cos(0.3*t);
+hyd=0.0*sin(0.3*t);
 
-hxdp=-0.3*0.3*sin(0.3*t);
-hydp=0.3*0.3*cos(0.3*t);
+hxdp=[0 diff(hxd)/ts];
+hydp=[0 diff(hyd)/ts];
 
+hd=[hxd;hyd];
 %% RESTRICCION PARA LAS ACCIONES DE CONTROL
 lb = [-0.2,-2.55]';
 ub = [ 0.2, 2.55]';
@@ -86,7 +87,8 @@ for k=1:length(t)-1
     hp=[hxp(k),hyp(k)]';
     
     q=[0 phi(k)]'; 
-  
+    
+    v=[u(k),w(k)]';
     %% GANANCIA PARA OPTIMIZADOR
     H=[1,0;...
         0,1];
@@ -109,10 +111,10 @@ for k=1:length(t)-1
     vrefp_u=diff([uref_c uref_c(end)])/ts;
     vrefp_w=diff([wref_c wref_c(end)])/ts;
     vrefp=[vrefp_u(k) vrefp_w(k)]';
-    v=[uref_c(k) wref_c(k)]';
+    vc=[uref_c(k) wref_c(k)]';
     
     %% COMPENSACION DINAMICA PLATAFORMA MOVIL
-    Dinamica = COMPENSACION_DINAMICA_PLATAFORMA_MOVIL_N(vrefp,vref_e,v,q,ts,PARAMETROS);
+    Dinamica = COMPENSACION_DINAMICA_PLATAFORMA_MOVIL_N(vrefp,vref_e,vc,q,ts,PARAMETROS);
      
     %% DINAMICA DE LA PLATAFORMA MOVIL
     uref(k)=Dinamica(1);
@@ -127,8 +129,8 @@ for k=1:length(t)-1
     odomdata = receive(odom,3);
     pose = odomdata.Pose.Pose;
     quat = pose.Orientation;
-    %angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
-    angles=pose.Orientation.Z;
+    angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
+%     angles=pose.Orientation.Z;
     
     %% LECTURA DE LAS VELOCIDADES DE CONTROL REALES DEL ROBOT
     vel=odomdata.Twist.Twist;

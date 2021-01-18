@@ -71,9 +71,9 @@ F_2=0;
 xa_1=0;
 xa_2=0;
 
-%% COMPONENTES DE LA LEY DE PARAMETROS ADAPTATIVOS
-chi_real=x'*ones(1,length(t));
-chi_estimado(:,1)=x*0;
+
+%% PARAMETROS ADAPTATIVOS
+chi=zeros(6,length(t));
 
 %% BUCLE DE SIMULACION 
 for k=1:length(t)
@@ -118,11 +118,14 @@ for k=1:length(t)
     vrefp_u=diff([uref_c uref_c(end)])/ts;
     vrefp_w=diff([wref_c wref_c(end)])/ts;
     vrefp=[vrefp_u(k) vrefp_w(k)]';
-    v=[uref_c(k) wref_c(k)]';
-    
+    vd=[uref_c(k) wref_c(k)]';
+    v=[u(k) w(k)];
     %% COMPENSACION DINAMICA PLATAFORMA MOVIL
-    Dinamica = COMPENSACION_DINAMICA_PLATAFORMA_MOVIL_N(vrefp,vref_e,v,q,ts,chi_real(:,k),chi_estimado(:,k));
-     
+    Dinamica=Adaptativo_1(vrefp,vref_e,v,vd,chi(:,k),ts);
+    %% DINAMICA DE LA PLATAFORMA MOVIL
+    uref(k)=Dinamica(1);
+    wref(k)=Dinamica(2);
+    chi(:,k+1)=Dinamica(3:8,1);
     %% DINAMICA DE LA PLATAFORMA MOVIL
     uref(k)=Dinamica(1);
     wref(k)=Dinamica(2);
@@ -255,18 +258,18 @@ set(gcf, 'PaperPosition', [0 0 10 4]);
 
 print -dpng CONTROL_VALUES_1_PROPORCIONAL
 print -depsc CONTROL_VALUES_1_PROPORCIONAL
+
 figure
 set(gcf, 'PaperUnits', 'inches');
 set(gcf, 'PaperSize', [4 2]);
 set(gcf, 'PaperPositionMode', 'manual');
 set(gcf, 'PaperPosition', [0 0 10 4]);
-plot(t,chi_estimado(:,1:length(t)),'-','linewidth',1);
-grid on;
-grid minor;
-hold on;
-plot(t,chi_real,'--','linewidth',1);
-title('$\textrm{Parametros Adaptativos}$','Interpreter','latex','FontSize',9);
-legend({'$\chi_e$','$\chi$'},'Interpreter','latex','FontSize',9);
-xlabel('$\textrm{Tiempo}[s]$','Interpreter','latex','FontSize',9); ylabel('$\textrm{Parametros}$','Interpreter','latex','FontSize',9);
+plot(t,chi(:,1:length(t)),'linewidth',1);
+hold on
+grid on
+%plot(t(1:length(chi_real)),chi_real,'--','linewidth',1);
+title('$\textrm{Adaptative Parameters}$','Interpreter','latex','FontSize',9);
+legend({'$\chi_e$'},'Interpreter','latex','FontSize',9);
+xlabel('$\textrm{Time}[s]$','Interpreter','latex','FontSize',9); ylabel('$\textrm{Parameters}$','Interpreter','latex','FontSize',9);
 print -dpng PARAMETROS
 print -depsc PARAMETROS

@@ -119,12 +119,12 @@ for k=1:length(t)
     vd=[uref_c(k) wref_c(k)]';
     v=[u(k) w(k)];
     %% COMPENSACION DINAMICA PLATAFORMA MOVIL
-%     Dinamica = COMPENSACION_DINAMICA_PLATAFORMA_MOVIL_N(vrefp,vref_e,vd,q,ts,PARAMETROS);
-    Dinamica=Adaptativo_1(vrefp,vref_e,v,vd,chi(:,k),ts);
+    Dinamica = COMPENSACION_DINAMICA_PLATAFORMA_MOVIL_N(vrefp,vref_e,vd,q,ts,PARAMETROS);
+%     Dinamica=Adaptativo_1(vrefp,vref_e,v,vd,chi(:,k),ts);
     %% DINAMICA DE LA PLATAFORMA MOVIL
     uref(k)=Dinamica(1);
     wref(k)=Dinamica(2);
-    chi(:,k+1)=Dinamica(3:8,1);
+%     chi(:,k+1)=Dinamica(3:8,1);
 
     %% ENVIO DE DATOS AL ROBOT
     velmsg.Linear.X = uref(k);
@@ -165,17 +165,6 @@ velmsg.Angular.Z = 0;
 send(robot,velmsg);
 rosshutdown;
 
-%% GRAFICAS DEL SISTEMA
-% figure
-% plot(t,F,'-r')
-% hold on 
-% grid on
-% plot(t,xa,'-g')
-% 
-% figure
-% plot(t,angulo,'-r')
-% grid on
-% hold on
 
 figure
 set(gcf, 'PaperUnits', 'inches');
