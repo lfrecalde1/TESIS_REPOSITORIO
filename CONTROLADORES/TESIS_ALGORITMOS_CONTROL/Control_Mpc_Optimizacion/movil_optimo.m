@@ -1,4 +1,4 @@
-function [f] = movil_optimo(z,H,R,hd,h,q,l,ts,N,k,vreal,x,obj)
+function [f] = movil_optimo(z,H,R,hd,h,q,l,ts,N,k,vreal,x)
 %1) Definici�n de variables
     %a) Acciones de control (incognita)        
      vc = z;       %z=[u,w,q1_p,q2_p,q3_p,q4_p]';
@@ -17,13 +17,13 @@ function [f] = movil_optimo(z,H,R,hd,h,q,l,ts,N,k,vreal,x,obj)
      
      w(1)=vreal(2);
      
-     T=[delta(R,vreal)];
+%      T=[delta(R,vreal)];
      
      r=0.3;
      
      b=-0.14;
      
-     Fuerza=[evasion(obj,h(:,1),r,b)];
+%      Fuerza=[evasion(obj,h(:,1),r,b)];
      
 for i=1:N
     
@@ -63,14 +63,14 @@ for i=1:N
     
     L=[L;(Fun(H,hd(:,k+i),h(:,i+1)))];
       
-    T=[T;delta(R,v)];
+%     T=[T;delta(R,v)];
     
      
-    Fuerza=[Fuerza;evasion(obj,h(:,i+1),r,b)];
+%     Fuerza=[Fuerza;evasion(obj,h(:,i+1),r,b)];
 end
 % f=0.5*sum(L)+0.5*sum(T);
-% f=0.5*sum(L);
-f=0.5*sum(L)+0.5*sum(Fuerza);
+f=0.5*sum(L);
+% f=0.5*sum(L)+0.5*sum(Fuerza);
 end
 function [F] = Fun(H,hd,h)
     alpha=1;    %Peso de errores de posici�n

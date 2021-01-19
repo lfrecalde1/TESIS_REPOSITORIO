@@ -97,7 +97,7 @@ for k=1:length(t)-N
     R=1*eye(2);
     
     %% CONTROLADOR BASADO EN OPTIMIZACION
-    f_obj = @(z) movil_optimo(z,H,R,hd,h,q,l,ts,N,k,v,PARAMETROS,Obj);
+    f_obj = @(z) movil_optimo(z,H,R,hd,h,q,l,ts,N,k,v,PARAMETROS);
      
     qref = fmincon(f_obj,z0,[],[],[],[],lb,ub,[],options);
      
