@@ -19,7 +19,7 @@ A continuación se presenta los algoritmos disponibles en el robot
 
 ## Instalación de requisitos en el computador del Robot Móvil
 
-Estos pasos se van a arealizar en el computador del robot.
+Estos pasos se van a realizar en el computador del robot.
 
 ```bash
 sudo apt-get update
@@ -96,7 +96,7 @@ La interface necesita la direccion IP del robot y de computadora remota, ademas 
 <img src="images/ip2.png">
 </div>
 
-Continuación  se puede ver la interface en modomanual
+Continuación  se puede ver la interface en modo manual
 <div align="center">
 <img src="images/manual_1.png">
 </div>
@@ -125,5 +125,6 @@ Sus resultados serian.
 <div align="center">
 <img src="images/mpc_1_r.png">
 </div>
+
 ## Contribuciones
 Las solicitudes de contribucion son bienvenidas. Para cambios importantes, abrir un problema primero para discutir qué le gustaría cambiar.
