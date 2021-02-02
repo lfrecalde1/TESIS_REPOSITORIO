@@ -8,6 +8,9 @@ A continuación se presenta los algoritmos disponibles en el robot
   - Control Optimización
   - Control Neuronal
 
+[TOCM]
+
+[TOC]
 #### Características!
   - Se dispone de una interfase en la que se puede seleccionar entre los distintos tipos de controladores
   - En la interfase se dispone de un modo manual donde el usuario puede accionar al robot directamente
@@ -82,10 +85,19 @@ Debido a que la interface exige muchos recursos ya que fue desarrollada en el en
 
 Si su sistema operativo es [Ubuntu](https://ubuntu.com/download) o cualquiera compatible con [Unix](https://www.apple.com/la/macos/big-sur/) no va a tener ningun problema de desempeno de la interface.
 
-```cmd
+Dirigirse a la sección de la interface y ejecutar
 
+```matlab
+INTERFACE.mlapp
 
 ```
 
+Continuación  se puede ver la interface en modomanual
+<div align="center">
+<img src="images/manual_1.png" width="400" height="200">
+</div>
+<div align="center">
+<img src="images/manual_2.png" width="400" height="200">
+</div>
 ## Contribuciones
 Las solicitudes de contribucion son bienvenidas. Para cambios importantes, abrir un problema primero para discutir qué le gustaría cambiar.
