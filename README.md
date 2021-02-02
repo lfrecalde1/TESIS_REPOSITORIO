@@ -14,23 +14,78 @@ A continuación se presenta los algoritmos disponibles en el robot
   - Dispone de algunos metodos para la estimacion dinamica del robot
 
 
-## Installation
+## Instalación de requisitos en el computador del Robot Móvil
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+Estos pasos se van a arealizar en el computador del robot.
 
 ```bash
-pip install foobar
+sudo apt-get update
+sudo apt-get upgrade
+```
+Es necesario tener el paquete [git](https://git-scm.com/) para instalarlo ejecutamos.
+
+```bash
+sudo apt-get install git-core
+```
+## Instalación de dependencias para el Robot Móvil
+Para la instalación de todas las dependencias se procede a descargar el repositorio y dar permiso de ejecucion a ciertos scripts
+```bash
+git clone https://github.com/lfrecalde1/TESIS_REPOSITORIO.git
+
+cd TESIS_REPOSITORIO/INSTALADORES_ROBOT_PC/
+
+chmod +x configuracion_entorno.sh CONFIGURACION_IP_ROS.sh install_ros.sh paquetes_robot.sh requitos_sbc.sh SSH.sh Tesis.sh
+
+./requitos_sbc.sh
+```
+## Instalación protocolo SSH robot
+SSH es un protocolo de administración.
+
+```bash
+./SSH.sh
 ```
 
-## Usage
+## Instalación del Entorno ROS
+Ejecutar el siguiente comando en la direccion de los Scripts.
 
-```python
-import foobar
+```bash
+./install_ros.sh
 
-foobar.pluralize('word') # returns 'words'
-foobar.pluralize('goose') # returns 'geese'
-foobar.singularize('phenomena') # returns 'phenomenon'
+./configuracion_entorno.sh
+
+./paquetes_robot.sh
+```
+Concluido este proceso se debe configurar las direcciones IP, el siguien comando nos dara la direccion respectiva , esta debe ser colocada en las variables del sistema.
+
+```bash
+ifconfig
+
+echo export ROS_MASTER_URI=http://192.168.0.104:11311
+
+echo export ROS_HOSTNAME=192.168.0.104
+
+source ~/.bashrc
+```
+Considerar que se debe colocar la direccion IP respectiva.
+## Ejecución 
+Finalmente se reinicia al robot y se ejecuta el siguiente comando con el cual el robot estara listo para usar.
+
+```bash
+TESIS_REPOSITORIO/INSTALADORES_ROBOT_PC/Tesis.sh
 ```
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+## Puesta en marcha Computadora remota
+Dependiendo el sistema operativo se recomienda.
+
+Si su sistema operativo es [Windows](https://www.microsoft.com/es-es/software-download/windows10ISO), se debe  instalar [matlab](https://www.mathworks.com/products/matlab.html) en su version 2018 en adelante, y este debe se instalado en el disco solido del Computador.
+Debido a que la interface exige muchos recursos ya que fue desarrollada en el entorno de matlab.
+
+Si su sistema operativo es [Ubuntu](https://ubuntu.com/download) o cualquiera compatible con [Unix](https://www.apple.com/la/macos/big-sur/) no va a tener ningun problema de desempeno de la interface.
+
+```cmd
+
+
+```
+
+## Contribuciones
+Las solicitudes de contribucion son bienvenidas. Para cambios importantes, abrir un problema primero para discutir qué le gustaría cambiar.
