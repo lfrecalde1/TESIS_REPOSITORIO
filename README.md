@@ -91,13 +91,30 @@ Dirigirse a la sección de la interface y ejecutar
 INTERFACE.mlapp
 
 ```
+La interface necesita la direccion IP del robot y de computadora remota, ademas los topics de la comunicacion.
+<div align="center">
+<img src="images/ip2.png">
+</div>
 
 Continuación  se puede ver la interface en modomanual
 <div align="center">
-<img src="images/manual_1.png" width="400" height="200">
+<img src="images/manual_1.png">
 </div>
 <div align="center">
-<img src="images/manual_2.png" width="400" height="200">
+<img src="images/manual_2.png">
 </div>
+
+Se puede visualizar la trayectoria del robot así como los objetos a su alrrededor.
+En este modo de operacion se puede asignar la velocidad lineal y angular del robot.
+
+En la siguiente imagen se presenta la ejecución del control proporcional, en este controlador  se puede modificar sus ganancias y la trayectoria deseada.
+<div align="center">
+<img src="images/proporcional_1.png">
+</div>
+Además se puede acceder a los resultados de este controlador.
+<div align="center">
+<img src="images/proporcional_1_r.png">
+</div>
+
 ## Contribuciones
 Las solicitudes de contribucion son bienvenidas. Para cambios importantes, abrir un problema primero para discutir qué le gustaría cambiar.
