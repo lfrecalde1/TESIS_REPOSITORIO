@@ -116,5 +116,14 @@ Además se puede acceder a los resultados de este controlador.
 <img src="images/proporcional_1_r.png">
 </div>
 
+Finalmente se presenta el controlador MPC usando optimización.
+<div align="center">
+<img src="images/mpc_1.png">
+</div>
+
+Sus resultados serian.
+<div align="center">
+<img src="images/mpc_1_r.png">
+</div>
 ## Contribuciones
 Las solicitudes de contribucion son bienvenidas. Para cambios importantes, abrir un problema primero para discutir qué le gustaría cambiar.
