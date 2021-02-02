@@ -2,19 +2,20 @@
 # Wall3
 Wall3 es un robot móvil tipo diferencial, el cual puede ser utilizado para probar distintos algoritmos de control clasicos e inteligentes.
 A continuación se presenta los algoritmos disponibles en el robot
-  - Control Proporcional
-  - Control Fuzzy Adaptativo
-  - Control MPC Optimización
-  - Control Optimización
+  - Control Proporcional + Compensacion Dinamica
+  - Control Fuzzy Adaptativo + Compensacion Dinamica
+  - Control MPC Optimización 
+  - Control Optimización + Compensacion Dinamica
   - Control Neuronal
 
-[TOCM]
+   
+## Características!
 
-[TOC]
-#### Características!
+
   - Se dispone de una interfase en la que se puede seleccionar entre los distintos tipos de controladores
   - En la interfase se dispone de un modo manual donde el usuario puede accionar al robot directamente
   - Dispone de algunos metodos para la estimacion dinamica del robot
+
 
 
 ## Instalación de requisitos en el computador del Robot Móvil
@@ -128,3 +129,4 @@ Sus resultados serian.
 
 ## Contribuciones
 Las solicitudes de contribucion son bienvenidas. Para cambios importantes, abrir un problema primero para discutir qué le gustaría cambiar.
+
