@@ -26,7 +26,7 @@ chip=n*K*vref_e;
 chi=chi+chip*ts;
 % b) Estados de la plataforma móvil 
 control=n'*chi;
-     
+% ESTA ESS UNA LEY DE CONTROL ADAPTATIVA
 
   
 % c) Parámetros Dinámicos de la plataforma movil
