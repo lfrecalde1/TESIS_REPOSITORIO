@@ -54,8 +54,8 @@ hxp(1)=u(1)*cos(phi(1))-a*w(1)*sin(phi(1));
 hyp(1)=u(1)*sin(phi(1))+a*w(1)*cos(phi(1));
 
 %% TRAYECTORIA DESEADAS
-hxd=0.0*cos(0.3*t);
-hyd=0.0*sin(0.3*t);
+hxd=0.3*cos(0.3*t);
+hyd=0.3*sin(0.3*t);
 
 hxdp=[0 diff(hxd)/ts];
 hydp=[0 diff(hyd)/ts];
