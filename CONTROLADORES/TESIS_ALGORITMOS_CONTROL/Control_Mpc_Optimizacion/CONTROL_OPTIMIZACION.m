@@ -5,7 +5,7 @@
 %% PARAMETROS DE TIEMPO
 clc,clear all,close all;
 ts=0.1;
-tf=60;
+tf=30;
 to=0;
 t=[to:ts:tf];
 
@@ -54,8 +54,8 @@ hxp(1)=u(1)*cos(phi(1))-a*w(1)*sin(phi(1));
 hyp(1)=u(1)*sin(phi(1))+a*w(1)*cos(phi(1));
 
 %% TRAYECTORIA DESEADAS
-hxd=0.6*cos(0.1*t);
-hyd=0.6*sin(0.1*t);
+hxd=0.3*cos(0.3*t);
+hyd=0.3*sin(0.3*t);
 
 hxdp=[0 diff(hxd)/ts];
 hydp=[0 diff(hyd)/ts];
@@ -73,8 +73,8 @@ options = optimset('Algorithm','sqp','Display','off');
 N=10;
 
 %% OBJETOS SIMULADOS
-world=World(lidarSub,[hx(1),hy(1),phi(1)]);
-Obj=world;
+% world=World(lidarSub,[hx(1),hy(1),phi(1)]);
+% Obj=world;
 %% BUCLE DE SIMULACION 
 for k=1:length(t)-N
     tic;
@@ -155,8 +155,8 @@ for k=1:length(t)-N
     z0 = [uref_c(k),wref_c(k)]';
     
     %% LECTURA DE LOS OBJETOS
-    world=World(lidarSub,[hx(k+1),hy(k+1),phi(k+1)]);
-    Obj=world;
+%     world=World(lidarSub,[hx(k+1),hy(k+1),phi(k+1)]);
+%     Obj=world;
     
     while(toc<ts)
     end
