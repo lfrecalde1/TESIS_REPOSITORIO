@@ -1,0 +1,2 @@
+Esta guide esta disenada para matlab version 2019 o 2020.
+En estas versiones si hay soporte para imagenes
