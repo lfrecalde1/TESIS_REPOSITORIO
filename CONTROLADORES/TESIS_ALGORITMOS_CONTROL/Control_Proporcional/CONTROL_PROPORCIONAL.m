@@ -15,7 +15,7 @@ PARAMETROS=x;
 
 %% INICIALIZACION DE LA COMUNICACION CON ROS
 rosshutdown
-setenv('ROS_MASTER_URI','http://192.168.0.104:11311');
+setenv('ROS_MASTER_URI','http://192.168.0.103:11311');
 setenv('ROS_IP','192.168.0.103');
 rosinit
 
