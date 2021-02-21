@@ -2,9 +2,7 @@
 %XXXXXXXXXXXXXXXXXXXCONTROL DE TRAYECTORIA DE UNA PLATAFORMA MOVILXXXXXXXXXXXXXXXXXX
 %XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-%% PARAMETROS DE TIEMPO
-clc,clear all,close all;
-ts=0.1;
+%% PARAMETROS;
 tf=20;
 to=0;
 t=[to:ts:tf];
@@ -15,7 +13,7 @@ PARAMETROS=x;
 
 %% INICIALIZACION DE LA COMUNICACION CON ROS
 rosshutdown
-setenv('ROS_MASTER_URI','http://192.168.0.104:11311');
+setenv('ROS_MASTER_URI','http://192.168.0.103:11311');
 setenv('ROS_IP','192.168.0.103');
 rosinit
 
@@ -60,7 +58,7 @@ hxdp=[0 diff(hxd)/ts];
 hydp=[0 diff(hyd)/ts];
 
 %% GANANCIA PARA LOS ACTUADORES
-K2=1; 
+K2=0.5; 
 
 %% LECTURA DE CONTROLADOR FUZZY
 self_x=readfis('fuzzpid');
@@ -268,3 +266,7 @@ subplot(2,1,2)
 
 print -dpng ADAPTACION_PARAMETROS_FUZZY
 print -depsc ADAPTACION_PARAMETROS_FUZZY
+
+%% seccion para almacenar los valores de los errores
+hef=[hxe;hye];
+save('hef.mat','hef')

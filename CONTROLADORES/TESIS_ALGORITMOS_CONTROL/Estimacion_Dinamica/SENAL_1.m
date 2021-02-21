@@ -17,7 +17,7 @@ end
 if(type==1)
 uref_c(k)=0.2*sin(0.7*t(k));
 %uref_c(k)=0.3*sqrt(0.2^2+(0.2*pi*cos(0.3*pi*t(k)))^2);
-wref_c(k)=0.7*(-0.3*pi^2*sin(0.3*pi*t(k)))/(1+pi^2*cos(0.3*pi*t(k))^2);
+wref_c(k)=0.6*(-0.3*pi^2*sin(0.3*pi*t(k)))/(1+pi^2*cos(0.3*pi*t(k))^2);
 end
 if(type==2)
    % Identificación

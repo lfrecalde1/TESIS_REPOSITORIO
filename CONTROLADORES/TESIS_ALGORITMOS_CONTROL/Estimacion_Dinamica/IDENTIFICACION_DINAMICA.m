@@ -11,8 +11,8 @@ t=[to:ts:tfinal];
 
 %% INICIALIZACION DE LA COMUNICACION CON ROS
 rosshutdown
-setenv('ROS_MASTER_URI','http://192.168.0.104:11311');
-setenv('ROS_IP','192.168.0.102');
+setenv('ROS_MASTER_URI','http://192.168.0.103:11311');
+setenv('ROS_IP','192.168.0.103');
 rosinit
 
 %% ENLACE A LOS TOPICOS DE ROS NECESARIOS
@@ -28,7 +28,7 @@ quat = pose.Orientation;
 angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
 
 %% DISTANCIA HACIA EL PUNTO DE INTERES
-a=0.18;
+a=0.1;
 
 %% POSICIONES INICIALES 
 hx(1)=pose.Position.X;

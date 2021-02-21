@@ -107,11 +107,11 @@ set(gcf, 'PaperPosition', [0 0 10 4]);
 print -dpng VALIDATION_OPTIMIZACION
 print -depsc VALIDATION_OPTIMIZACION
 
-figure
-plot(up_sal)
-hold on
-plot(UP)
-figure
-plot(u_sal,'r')
-hold on
-plot(U,'b')
+% figure
+% plot(up_sal)
+% hold on
+% plot(UP)
+% figure
+% plot(u_sal,'r')
+% hold on
+% plot(U,'b')

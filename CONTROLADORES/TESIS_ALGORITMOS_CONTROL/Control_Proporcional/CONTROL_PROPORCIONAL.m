@@ -4,7 +4,7 @@
 
 %% PARAMETROS DE TIEMPO
 clc,clear all,close all;
-ts=0.05;
+ts=0.1;
 tf=20;
 to=0;
 t=[to:ts:tf];
@@ -62,28 +62,15 @@ hydp=[0 diff(hyd)/ts];
 KP=1; 
 
 %% GANANCIA PARA LOS ACTUADORES
-K2=1; 
+K2=0.5; 
 
-%% FUERZA DE INTERACCION CON EL OBJETO 
-
-F_1=0;
-F_2=0;
-xa_1=0;
-xa_2=0;
 
 %% PARAMETROS ADAPTATIVOS
 chi=zeros(6,length(t));
 %% BUCLE DE SIMULACION 
 for k=1:length(t)
     tic;
-    %% TOMA DE DATOS DESDE LIDAR Y SACAR EL ANGULO FUERZA Y DISTANCIA
-    %[F(k),angulo(k),d]=evasion_obstaculos(lidarSub);
-    
-    %% GENERACION DE IMPEDANCIA
-    %[xa(k),xa_1,xa_2,F_1,F_2] = impedancia_1(F(k),F_1,F_2,xa_1,xa_2);
-    
-    %% ROTACION DEL PUNTO DESEADO
-    %[hxd(k),hyd(k),hxdp(k),hydp(k)]=ROTACION_REFERENCIA(hxd(k),hyd(k),hxdp(k),hydp(k),xa(k));
+   
     %% ERROR DE CONTROL
     hxe(k)=hxd(k)-hx(k);
     
@@ -242,17 +229,6 @@ set(gcf, 'PaperPosition', [0 0 10 4]);
 print -dpng CONTROL_VALUES_1_PROPORCIONAL
 print -depsc CONTROL_VALUES_1_PROPORCIONAL
 
-figure
-set(gcf, 'PaperUnits', 'inches');
-set(gcf, 'PaperSize', [4 2]);
-set(gcf, 'PaperPositionMode', 'manual');
-set(gcf, 'PaperPosition', [0 0 10 4]);
-plot(t,chi(:,1:length(t)),'linewidth',1);
-hold on
-grid on
-%plot(t(1:length(chi_real)),chi_real,'--','linewidth',1);
-title('$\textrm{Adaptative Parameters}$','Interpreter','latex','FontSize',9);
-legend({'$\chi_e$'},'Interpreter','latex','FontSize',9);
-xlabel('$\textrm{Time}[s]$','Interpreter','latex','FontSize',9); ylabel('$\textrm{Parameters}$','Interpreter','latex','FontSize',9);
-print -dpng PARAMETROS
-print -depsc PARAMETROS
+%% seccion para almacenar los valores de los errores
+hep=[hxe;hye];
+save('hep.mat','hep')

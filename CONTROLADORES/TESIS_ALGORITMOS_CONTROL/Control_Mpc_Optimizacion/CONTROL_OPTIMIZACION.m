@@ -5,7 +5,7 @@
 %% PARAMETROS DE TIEMPO
 clc,clear all,close all;
 ts=0.1;
-tf=30;
+tf=20;
 to=0;
 t=[to:ts:tf];
 
@@ -15,7 +15,7 @@ PARAMETROS=x;
 
 %% INICIALIZACION DE LA COMUNICACION CON ROS
 rosshutdown
-setenv('ROS_MASTER_URI','http://192.168.0.104:11311');
+setenv('ROS_MASTER_URI','http://192.168.0.103:11311');
 setenv('ROS_IP','192.168.0.103');
 rosinit
 
@@ -178,12 +178,6 @@ set(gcf, 'PaperSize', [4 2]);
 set(gcf, 'PaperPositionMode', 'manual');
 set(gcf, 'PaperPosition', [0 0 10 4]);
 plot(hxd(1,1:length(hx)),hyd(1,1:length(hx)),'--','Color',[56,171,217]/255,'linewidth',1.5); hold on;
-figure
-set(gcf, 'PaperUnits', 'inches');
-set(gcf, 'PaperSize', [4 2]);
-set(gcf, 'PaperPositionMode', 'manual');
-set(gcf, 'PaperPosition', [0 0 10 4]);
-plot(hxd(1,1:length(hx)),hyd(1,1:length(hx)),'--','Color',[56,171,217]/255,'linewidth',1.5); hold on;
 plot(hx,hy,'Color',[32,185,29]/255,'linewidth',1.5); hold on;
 grid on;
 grid minor;
@@ -261,3 +255,7 @@ set(gcf, 'PaperPosition', [0 0 10 4]);
 
 print -dpng CONTROL_VALUES_1_OPTIMIZACION
 print -depsc CONTROL_VALUES_1_OPTIMIZACION
+
+%% seccion para almacenar los valores de los errores
+hem=[hxe;hye];
+save('hem.mat','hem')

@@ -15,7 +15,7 @@ PARAMETROS=x;
 
 %% INICIALIZACION DE LA COMUNICACION CON ROS
 rosshutdown
-setenv('ROS_MASTER_URI','http://192.168.0.104:11311');
+setenv('ROS_MASTER_URI','http://192.168.0.103:11311');
 setenv('ROS_IP','192.168.0.103');
 rosinit
 
@@ -239,3 +239,7 @@ set(gcf, 'PaperPosition', [0 0 10 4]);
 
 print -dpng CONTROL_VALUES_1_OPTIMIZACION
 print -depsc CONTROL_VALUES_1_OPTIMIZACION
+
+%% seccion para almacenar los valores de los errores
+heo=[hxe;hye];
+save('heo.mat','heo')

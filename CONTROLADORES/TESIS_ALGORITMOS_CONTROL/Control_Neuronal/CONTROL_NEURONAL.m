@@ -4,8 +4,8 @@
 
 %% PARAMETROS DE TIEMPO
 clc,clear all,close all;
-ts=0.05;
-tf=30;
+ts=0.1;
+tf=20;
 to=0;
 t=[to:ts:tf];
 
@@ -15,8 +15,8 @@ PARAMETROS=x;
 
 %% INICIALIZACION DE LA COMUNICACION CON ROS
 rosshutdown
-setenv('ROS_MASTER_URI','http://192.168.100.20:11311');
-setenv('ROS_IP','192.168.100.20');
+setenv('ROS_MASTER_URI','http://192.168.0.103:11311');
+setenv('ROS_IP','192.168.0.103');
 rosinit
 
 %% ENLACE A LOS TOPICOS DE ROS NECESARIOS
@@ -29,8 +29,8 @@ odomdata = receive(odom,3);
 pose = odomdata.Pose.Pose;
 vel=odomdata.Twist.Twist;
 quat = pose.Orientation;
-%angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
-angles=pose.Orientation.Z;
+angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
+% angles=pose.Orientation.Z;
 
 %% DISTANCIA HACIA EL PUNTO DE INTERES
 a=0.1;
@@ -52,12 +52,12 @@ hy(1)=hy(1)+a*sin(phi(1));
 hxp(1)=u(1)*cos(phi(1))-a*w(1)*sin(phi(1));
 hyp(1)=u(1)*sin(phi(1))+a*w(1)*cos(phi(1));
 
-%% TRAYECTORIA DESEADAS
-hxd=0.5*sin(0.3*t);
-hyd=0.5*cos(0.3*t);
+%% TRAYECTORIAS
+hxd=0.3*cos(0.3*t);
+hyd=0.3*sin(0.3*t);
 
-hxdp=0.5*0.3*cos(0.3*t);
-hydp=-0.5*0.3*sin(0.3*t);
+hxdp=[0 diff(hxd)/ts];
+hydp=[0 diff(hyd)/ts];
 
 %% GANANCIA PARA LOS ACTUADORES
 K2=1; 
@@ -149,8 +149,8 @@ for k=1:length(t)
     odomdata = receive(odom,3);
     pose = odomdata.Pose.Pose;
     quat = pose.Orientation;
-    %angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
-    angles=pose.Orientation.Z;
+    angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
+%     angles=pose.Orientation.Z;
     
     %% LECTURA DE LAS VELOCIDADES DE CONTROL REALES DEL ROBOT
     vel=odomdata.Twist.Twist;
@@ -336,3 +336,6 @@ xlabel('$\textrm{Time}[s]$','Interpreter','latex','FontSize',9)
 
 print -dpng PARAMETROS_ADAPTATIVOS
 print -depsc PARAMETROS_ADAPTATIVOS
+%% seccion para almacenar los valores de los errores
+hen=[hxe;hye];
+save('hen.mat','hen')
