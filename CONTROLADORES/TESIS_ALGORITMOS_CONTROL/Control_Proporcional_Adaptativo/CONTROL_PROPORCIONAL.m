@@ -5,7 +5,7 @@
 %% PARAMETROS DE TIEMPO
 clc,clear all,close all;
 ts=0.1;
-tf=15;
+tf=20;
 to=0;
 t=[to:ts:tf];
 
@@ -15,8 +15,8 @@ PARAMETROS=x;
 
 %% INICIALIZACION DE LA COMUNICACION CON ROS
 rosshutdown
-setenv('ROS_MASTER_URI','http://192.168.100.20:11311');
-setenv('ROS_IP','192.168.100.20');
+setenv('ROS_MASTER_URI','http://192.168.0.103:11311');
+setenv('ROS_IP','192.168.0.103');
 rosinit
 
 %% ENLACE A LOS TOPICOS DE ROS NECESARIOS
@@ -53,11 +53,11 @@ hxp(1)=u(1)*cos(phi(1))-a*w(1)*sin(phi(1));
 hyp(1)=u(1)*sin(phi(1))+a*w(1)*cos(phi(1));
 
 %% TRAYECTORIA DESEADAS
-hxd=0.4*cos(0.3*t);
-hyd=0.4*sin(0.3*t);
+hxd=0.3*cos(0.3*t);
+hyd=0.3*sin(0.3*t);
 
-hxdp=-0.4*0.3*sin(0.3*t);
-hydp=0.4*0.3*cos(0.3*t);
+hxdp=[0 diff(hxd)/ts];
+hydp=[0 diff(hyd)/ts];
 %% GANANCIASfigure DEL CONTROLADOR CINEMATICO
 KP=1; 
 
@@ -171,17 +171,7 @@ velmsg.Angular.Z = 0;
 send(robot,velmsg);
 rosshutdown;
 
-%% GRAFICAS DEL SISTEMA
-% figure
-% plot(t,F,'-r')
-% hold on 
-% grid on
-% plot(t,xa,'-g')
-% 
-% figure
-% plot(t,angulo,'-r')
-% grid on
-% hold on
+
 
 figure
 set(gcf, 'PaperUnits', 'inches');

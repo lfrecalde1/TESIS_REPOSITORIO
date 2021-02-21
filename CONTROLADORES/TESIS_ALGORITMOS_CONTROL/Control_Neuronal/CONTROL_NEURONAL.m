@@ -174,7 +174,7 @@ for k=1:length(t)
     [hy_estimado(k+1),JACOBIANO_Y,vjo,vjo_1,vjo_2,vij,vij_1,vij_2] = NEURONAL_LINEA(hy(k+1),uref_c(k),wref_c(k),N2,xite_2,alfa_2,vjo,vij,vjo_1,vij_1,vjo_2,vij_2);
     [phi_estimado(k+1),JACOBIANO_PHI,zjo,zjo_1,zjo_2,zij,zij_1,zij_2] = NEURONAL_LINEA(phi(k+1),uref_c(k),wref_c(k),N3,xite_3,alfa_3,zjo,zij,zjo_1,zij_1,zjo_2,zij_2);
     ACTUALIZACION=NEURONAL_ADAPTATIVO(JACOBIANO_X,JACOBIANO_Y,h,hd,phi(k+1),a);
-    chi(:,k+1)=chi(:,k)-ACTUALIZACION;
+    chi(:,k+1)=chi(:,k)-ACTUALIZACION*ts;
     if(chi(1,k+1)<=0.1)
         chi(1,k+1)=0.1;
     end

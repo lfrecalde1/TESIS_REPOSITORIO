@@ -41,7 +41,7 @@ function Dinamica = COMPENSACION_DINAMICA_PLATAFORMA_MOVIL_N(vrefp,vref_e,v,q,ts
 % f) MatrizCompensacion Dinamica.
 K3=1*diag([1 1]);
 
-K4=1*diag([1 1]);
+K4=0.5*diag([1 1]);
 
 % h) Modelo para compensación dinámica 
     vref= M*(vrefp+K4*tanh((K4^(-1))*K3*vref_e))+C*v;

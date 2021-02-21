@@ -28,11 +28,11 @@ function [L] = movil_optimo(z,H,hd,hd1,h,q,l,ts)
 %2) Posiciones deseados k+1    
     hk1 = ts*J*v_1+h;
     
-    R=[0.2,0;0,0.2];
+    R=[0.1,0;0,0.1];
     
-    error_1=hd-h;
+    error_1=1*tanh(hd-h);
     
-    error=hd1-hk1;
+    error=1*tanh(hd1-hk1);
     
     rate_error=error-error_1;
     

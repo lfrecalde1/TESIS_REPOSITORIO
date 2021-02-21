@@ -1,5 +1,5 @@
 function [SALIDA] = NEURONAL_ADAPTATIVO(JACOBIANO_X,JACOBIANO_Y,h,hd,phi,a)
-he=hd-h;
+he=tanh(hd-h);
 sigma=1*diag([1 1]);
 
 %NEURONAL ADAPTATIVO

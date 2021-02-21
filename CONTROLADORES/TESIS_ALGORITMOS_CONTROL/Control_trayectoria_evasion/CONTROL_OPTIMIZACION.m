@@ -1,10 +1,10 @@
 %XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-%XXXXXXXXXXXXXXXXXXXCONTROL DE TRAYECTORIA DE UNA PLATAFORMA MOVILXXXXXXXXXXXXXXXXXX
+%XXXXXXXXXXXXXXXXXXXCONTROL DE TRAYECTORIA DE UNA PLATAFORMA MOVILXXXXXXXXXXXXXXXXX
 %XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 %% PARAMETROS DE TIEMPO
 clc,clear all,close all;
-ts=0.05;
+ts=0.1;
 tf=20;
 to=0;
 t=[to:ts:tf];
@@ -24,16 +24,17 @@ robot = rospublisher('/cmd_vel');
 velmsg = rosmessage(robot);
 odom = rossubscriber('/odom');
 lidarSub = rossubscriber('/scan');
-
 %% LECTURA DEL ROBOT PARA CONDICIONES INICIALES
 odomdata = receive(odom,3);
 pose = odomdata.Pose.Pose;
 vel=odomdata.Twist.Twist;
 quat = pose.Orientation;
 angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
+% angles=pose.Orientation.Z;
 
 %% DISTANCIA HACIA EL PUNTO DE INTERES
 a=0.1;
+l=[a];
 
 %% POSICIONES INICIALES 
 hx(1)=pose.Position.X;
@@ -58,37 +59,47 @@ hyd=0.3*sin(0.3*t);
 
 hxdp=[0 diff(hxd)/ts];
 hydp=[0 diff(hyd)/ts];
-%% GANANCIASfigure DEL CONTROLADOR CINEMATICO
-KP=1; 
 
-%% GANANCIA PARA LOS ACTUADORES
-K2=0.5; 
+hd=[hxd;hyd];
+%% RESTRICCION PARA LAS ACCIONES DE CONTROL
+lb = [-0.2,-2.55]';
+ub = [ 0.2, 2.55]';
+z0=[u(1),w(1)]';
 
+%% CONFIGURACION DEL METODO DE OPTIMIZACION A UTILIZAR
+options = optimset('Algorithm','sqp','Display','off');
 
-%% PARAMETROS ADAPTATIVOS
-chi=zeros(6,length(t));
+%% DEFINICION DE LOS PASOS HACIA DELANTE A PREDECIR
+N=10;
+
+%% OBJETOS SIMULADOS
+% world=World(lidarSub,[hx(1),hy(1),phi(1)]);
+% Obj=world;
 %% BUCLE DE SIMULACION 
-for k=1:length(t)
+for k=1:length(t)-N
     tic;
-   
     %% ERROR DE CONTROL
     hxe(k)=hxd(k)-hx(k);
     
     hye(k)=hyd(k)-hy(k);
     
-    %% VECTORES PARA FORMA GENERAL
-    hd=[hxd(k) hyd(k)]';
-    
-    hdp=[hxdp(k) hydp(k)]';
-    
+    %% VECTORES PARA FORMA GENERAL   
     h =[hx(k),hy(k)]';
-    
-    hp=[hxp(k),hyp(k)]';
-    
+   
     q=[0 phi(k)]'; 
     
-    %% CONTROLADOR CINEMATICO
-    qref=PROPORCIONAL(KP,K2,hd,hdp,h,q,a);
+    v=[u(k),w(k)]';
+    %% GANANCIA PARA OPTIMIZADOR
+    %% GANANCIA PARA LA PARTE DE POSICION
+    H=[1,0;...
+        0,1];
+    %% GANANCIA PARA LA PARTE DE LAS ACCIONES DE CONTROL
+    R=1*eye(2);
+    
+    %% CONTROLADOR BASADO EN OPTIMIZACION
+    f_obj = @(z) movil_optimo(z,H,R,hd,h,q,l,ts,N,k,v,PARAMETROS);
+     
+    qref = fmincon(f_obj,z0,[],[],[],[],lb,ub,[],options);
      
     %% VELOCIDADES CINEMATICAS O VELOCIDADES DESEADAS PARA EL BLOQUE DE COMPENSACIÓN DIN�?MICA
     uref_c(k)=qref(1);
@@ -103,19 +114,18 @@ for k=1:length(t)
     vrefp_u=diff([uref_c uref_c(end)])/ts;
     vrefp_w=diff([wref_c wref_c(end)])/ts;
     vrefp=[vrefp_u(k) vrefp_w(k)]';
-    vd=[uref_c(k) wref_c(k)]';
-    v=[u(k) w(k)];
+    vc=[uref_c(k) wref_c(k)]';
+    
     %% COMPENSACION DINAMICA PLATAFORMA MOVIL
-    Dinamica = COMPENSACION_DINAMICA_PLATAFORMA_MOVIL_N(vrefp,vref_e,vd,q,ts,PARAMETROS);
-%     Dinamica=Adaptativo_1(vrefp,vref_e,v,vd,chi(:,k),ts);
+    Dinamica = COMPENSACION_DINAMICA_PLATAFORMA_MOVIL_N(vrefp,vref_e,vc,q,ts,PARAMETROS);
+     
     %% DINAMICA DE LA PLATAFORMA MOVIL
     uref(k)=Dinamica(1);
     wref(k)=Dinamica(2);
-%     chi(:,k+1)=Dinamica(3:8,1);
-
+     
     %% ENVIO DE DATOS AL ROBOT
-    velmsg.Linear.X = uref(k);
-    velmsg.Angular.Z =wref(k);
+    velmsg.Linear.X =uref_c(k);
+    velmsg.Angular.Z =wref_c(k);
     send(robot,velmsg);
     
     %% LECTURA DE LAS POSICIONES DEL ROBOT
@@ -123,6 +133,7 @@ for k=1:length(t)
     pose = odomdata.Pose.Pose;
     quat = pose.Orientation;
     angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
+%     angles=pose.Orientation.Z;
     
     %% LECTURA DE LAS VELOCIDADES DE CONTROL REALES DEL ROBOT
     vel=odomdata.Twist.Twist;
@@ -140,11 +151,19 @@ for k=1:length(t)
      
     hx(k+1)=pose.Position.X+a*cos(phi(k+1));
     hy(k+1)=pose.Position.Y+a*sin(phi(k+1));
+       
+    z0 = [uref_c(k),wref_c(k)]';
+    
+    %% LECTURA DE LOS OBJETOS
+%     world=World(lidarSub,[hx(k+1),hy(k+1),phi(k+1)]);
+%     Obj=world;
     
     while(toc<ts)
     end
+    toc
     t_sample(k)=toc;
 
+    
 end
 %% DETENER A LA PALTAFORMA MOVIL
 velmsg.Linear.X = 0;
@@ -152,13 +171,13 @@ velmsg.Angular.Z = 0;
 send(robot,velmsg);
 rosshutdown;
 
-
+%% GRAFICAS DEL SISTEMA
 figure
 set(gcf, 'PaperUnits', 'inches');
 set(gcf, 'PaperSize', [4 2]);
 set(gcf, 'PaperPositionMode', 'manual');
 set(gcf, 'PaperPosition', [0 0 10 4]);
-plot(hxd,hyd,'-','Color',[56,171,217]/255,'linewidth',1.5); hold on;
+plot(hxd(1,1:length(hx)),hyd(1,1:length(hx)),'--','Color',[56,171,217]/255,'linewidth',1.5); hold on;
 plot(hx,hy,'Color',[32,185,29]/255,'linewidth',1.5); hold on;
 grid on;
 grid minor;
@@ -167,17 +186,25 @@ legend('boxoff')
 title('$\textrm{Trayectoria Deseada y Trayectoria Descrita}$','Interpreter','latex','FontSize',9);
 xlabel('$\textrm{X}[m]$','Interpreter','latex','FontSize',9); ylabel('$\textrm{Y}[m]$','Interpreter','latex','FontSize',9)
 
-print -dpng SIMULATION_1_PROPORCIONAL
-print -depsc SIMULATION_1_PROPORCIONAL
+grid on;
+grid minor;
+legend({'$\mathbf{\eta}_{p_{des}}$','$\mathbf{\eta}_{p}$'},'Interpreter','latex','FontSize',11,'Orientation','horizontal');
+legend('boxoff')
+title('$\textrm{Trayectoria Deseada y Trayectoria Descrita}$','Interpreter','latex','FontSize',9);
+xlabel('$\textrm{X}[m]$','Interpreter','latex','FontSize',9); ylabel('$\textrm{Y}[m]$','Interpreter','latex','FontSize',9)
+
+print -dpng SIMULATION_1_OPTIMIZACION
+print -depsc SIMULATION_1_OPTIMIZACION
 
 figure
 set(gcf, 'PaperUnits', 'inches');
 set(gcf, 'PaperSize', [4 2]);
 set(gcf, 'PaperPositionMode', 'manual');
 set(gcf, 'PaperPosition', [0 0 10 4]);
+t=[0:ts:tf-ts];
 subplot(2,1,1)
-    plot(t,hxe,'Color',[226,76,44]/255,'linewidth',1); hold on;
-    plot(t,hye,'Color',[46,188,89]/255,'linewidth',1); hold on;
+    plot(t(1:length(hxe)),hxe,'Color',[226,76,44]/255,'linewidth',1); hold on;
+    plot(t(1:length(hxe)),hye,'Color',[46,188,89]/255,'linewidth',1); hold on;
     grid on;
     grid minor;
     legend({'$\tilde{x_{p}}$','$\tilde{y_{p}}$'},'Interpreter','latex','FontSize',11,'Orientation','horizontal');
@@ -186,8 +213,8 @@ subplot(2,1,1)
     ylabel('$[m]$','Interpreter','latex','FontSize',9);
   
 subplot(2,1,2)
-    plot(t,ue,'Color',[223,67,85]/255,'linewidth',1); hold on
-    plot(t,we,'Color',[56,171,217]/255,'linewidth',1); hold on
+    plot(t(1:length(hxe)),ue,'Color',[223,67,85]/255,'linewidth',1); hold on
+    plot(t(1:length(hxe)),we,'Color',[56,171,217]/255,'linewidth',1); hold on
     grid on;
     grid minor;
     legend({'$\tilde\mu$','$\tilde{\dot\psi_{p}}$'},'Interpreter','latex','FontSize',11,'Orientation','horizontal');
@@ -196,8 +223,8 @@ subplot(2,1,2)
     xlabel('$\textrm{Tiempo}[s]$','Interpreter','latex','FontSize',9);ylabel('$[m/s][rad/s]$','Interpreter','latex','FontSize',9);
 
     
-print -dpng CONTROL_ERRORS_1_PROPORCIONAL
-print -depsc CONTROL_ERRORS_1_PROPORCIONAL
+print -dpng CONTROL_ERRORS_1_OPTIMIZACION
+print -depsc CONTROL_ERRORS_1_OPTIMIZACION
 
 figure
 set(gcf, 'PaperUnits', 'inches');
@@ -205,10 +232,10 @@ set(gcf, 'PaperSize', [4 2]);
 set(gcf, 'PaperPositionMode', 'manual');
 set(gcf, 'PaperPosition', [0 0 10 4]);
     subplot(2,1,1)
-    plot(t,u(1:length(t)),'Color',[216,72,178]/255,'linewidth',1); hold on
-    plot(t,w(1:length(t)),'Color',[129,123,110]/255,'linewidth',1); hold on
-    plot(t,uref_c,'--','Color',[216,72,178]/255,'linewidth',1); hold on
-    plot(t,wref_c,'--','Color',[129,123,110]/255,'linewidth',1); hold on
+    plot(t(1:length(u)),u,'Color',[216,72,178]/255,'linewidth',1); hold on
+    plot(t(1:length(u)),w,'Color',[129,123,110]/255,'linewidth',1); hold on
+    plot(t(1:length(uref_c)),uref_c,'--','Color',[216,72,178]/255,'linewidth',1); hold on
+    plot(t(1:length(wref_c)),wref_c,'--','Color',[129,123,110]/255,'linewidth',1); hold on
     grid on;
     grid minor;
     title('$\textrm{Velocidades a la Salida del Robot y Velocidades de Control Cinematico}$','Interpreter','latex','FontSize',9);
@@ -217,8 +244,8 @@ set(gcf, 'PaperPosition', [0 0 10 4]);
     legend('boxoff')
     
     subplot(2,1,2)
-    plot(t,uref,'Color',[217,204,30]/255,'linewidth',1); hold on
-    plot(t,wref,'Color',[83,57,217]/255,'linewidth',1); grid on
+    plot(t(1,1:length(uref)),uref,'Color',[217,204,30]/255,'linewidth',1); hold on
+    plot(t(1,1:length(uref)),wref,'Color',[83,57,217]/255,'linewidth',1); grid on
     grid on;
     grid minor;
     legend({'$\mu_{ref}$','$\dot\psi_{p_{ref}}$'},'Interpreter','latex','FontSize',11,'Orientation','horizontal');
@@ -226,7 +253,9 @@ set(gcf, 'PaperPosition', [0 0 10 4]);
     title('$\textrm{Velocidades de Compensacion Dinamica}$','Interpreter','latex','FontSize',9);
     xlabel('$\textrm{Tiempo }[s]$','Interpreter','latex','FontSize',9);;ylabel('$[m/s][rad/s]$','Interpreter','latex','FontSize',9);
 
-print -dpng CONTROL_VALUES_1_PROPORCIONAL
-print -depsc CONTROL_VALUES_1_PROPORCIONAL
+print -dpng CONTROL_VALUES_1_OPTIMIZACION
+print -depsc CONTROL_VALUES_1_OPTIMIZACION
 
-save('/TESIS_REPOSITORIO_GIT/CONTROLADORES/TESIS_ALGORITMOS_CONTROL/Comparacion_controladores\hxe','varname')
+%% seccion para almacenar los valores de los errores
+hem=[hxe;hye];
+save('hem.mat','hem')
