@@ -5,7 +5,7 @@
 %% PARAMETROS DE TIEMPO
 clc,clear all,close all;
 ts=0.1;
-tf=30;
+tf=20;
 to=0;
 t=[to:ts:tf];
 
@@ -15,7 +15,7 @@ PARAMETROS=x;
 
 %% INICIALIZACION DE LA COMUNICACION CON ROS
 rosshutdown
-setenv('ROS_MASTER_URI','http://192.168.0.104:11311');
+setenv('ROS_MASTER_URI','http://192.168.0.103:11311');
 setenv('ROS_IP','192.168.0.103');
 rosinit
 
@@ -73,8 +73,18 @@ options = optimset('Algorithm','sqp','Display','off');
 N=10;
 
 %% OBJETOS SIMULADOS
-% world=World(lidarSub,[hx(1),hy(1),phi(1)]);
-% Obj=world;
+[world]=World(lidarSub,[hx(1),hy(1),phi(1)]);
+
+%% definicion de la figura para poder ver los resultados durante el bucle
+figure()
+ph1=plot(nan,nan,'b',nan,nan,'-r',nan,nan,'*k',nan,nan,'-b');
+title('$\textrm{Slam}$','Interpreter','latex','FontSize',12);
+xlabel('$\textrm{X}[m]$','Interpreter','latex','FontSize',9); 
+ylabel('$\textrm{Y}[m]$','Interpreter','latex','FontSize',9);
+%% auxiliares para almancer posicion
+
+xdata=[];
+ydata=[];
 %% BUCLE DE SIMULACION 
 for k=1:length(t)-N
     tic;
@@ -124,8 +134,8 @@ for k=1:length(t)-N
     wref(k)=Dinamica(2);
      
     %% ENVIO DE DATOS AL ROBOT
-    velmsg.Linear.X =uref_c(k);
-    velmsg.Angular.Z =wref_c(k);
+    velmsg.Linear.X =0;
+    velmsg.Angular.Z =0;
     send(robot,velmsg);
     
     %% LECTURA DE LAS POSICIONES DEL ROBOT
@@ -155,8 +165,43 @@ for k=1:length(t)-N
     z0 = [uref_c(k),wref_c(k)]';
     
     %% LECTURA DE LOS OBJETOS
-%     world=World(lidarSub,[hx(k+1),hy(k+1),phi(k+1)]);
-%     Obj=world;
+    [world]=World(lidarSub,[hx(k+1),hy(k+1),phi(k+1)])
+    
+    %% generacion del punto mas cercano al roobot
+    
+    valor_minimo=minimo(world,hx(k+1),hy(k+1))
+    
+    x_obj_min=[hx(k+1),valor_minimo(1)];
+    y_obj_min=[hy(k+1),valor_minimo(2)];
+    
+    xworld=[world(:,1)]';
+    yworld=[world(:,2)]';
+    
+    %% almacenar datos de la trayectoria
+    xdata=[xdata hx(k)];
+                
+    ydata=[ydata hy(k)];
+    
+    %% CREACIONES DE LA OBJETO PARA Q SE GRAFIQUE LA ORIENTACION DEL ROBOT
+    shape1x=pose.Position.X-(0.05)*sin(phi(k+1));
+    shape1y=pose.Position.Y+(0.05)*cos(phi(k+1));
+    
+    shape2x=pose.Position.X-(-0.05)*sin(phi(k+1));
+    shape2y=pose.Position.Y+(-0.05)*cos(phi(k+1));
+    
+    %% PUNTOS DEL TRIANGULO DE ORIENTACION
+    xdata_point=[shape1x  shape2x hx(k+1) shape1x];
+    ydata_point=[shape1y  shape2y hy(k+1) shape1y];
+    
+    %% grafica del sistema para poder ver en tiempo real
+    set(ph1(1),'XData',xdata,'YData',ydata);
+    set(ph1(2),'XData',xdata_point,'YData',ydata_point);
+    set(ph1(3),'XData',xworld,'YData',yworld);
+    axis([-2,2,-2,2])
+    legend({'$\mathbf{\eta}_{p}$'},'Interpreter','latex','FontSize',11,'Orientation','horizontal');
+    legend('boxoff')
+    grid on;
+    drawnow;
     
     while(toc<ts)
     end
@@ -172,12 +217,6 @@ send(robot,velmsg);
 rosshutdown;
 
 %% GRAFICAS DEL SISTEMA
-figure
-set(gcf, 'PaperUnits', 'inches');
-set(gcf, 'PaperSize', [4 2]);
-set(gcf, 'PaperPositionMode', 'manual');
-set(gcf, 'PaperPosition', [0 0 10 4]);
-plot(hxd(1,1:length(hx)),hyd(1,1:length(hx)),'--','Color',[56,171,217]/255,'linewidth',1.5); hold on;
 figure
 set(gcf, 'PaperUnits', 'inches');
 set(gcf, 'PaperSize', [4 2]);
@@ -263,5 +302,5 @@ print -dpng CONTROL_VALUES_1_OPTIMIZACION
 print -depsc CONTROL_VALUES_1_OPTIMIZACION
 
 %% seccion para almacenar los valores de los errores
-heo=[hxe;hye];
-save('heo.mat','heo')
+hem=[hxe;hye];
+save('hem.mat','hem')
