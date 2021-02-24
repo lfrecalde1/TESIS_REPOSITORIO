@@ -23,15 +23,15 @@ rosinit
 robot = rospublisher('/cmd_vel');
 velmsg = rosmessage(robot);
 odom = rossubscriber('/odom');
-lidarSub = rossubscriber('/scan');
+% lidarSub = rossubscriber('/scan');
 
 %% LECTURA DEL ROBOT PARA CONDICIONES INICIALES
 odomdata = receive(odom,3);
 pose = odomdata.Pose.Pose;
 vel=odomdata.Twist.Twist;
 quat = pose.Orientation;
-angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
-
+% angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
+angles=pose.Orientation.Z;
 %% DISTANCIA HACIA EL PUNTO DE INTERES
 a=0.1;
 
@@ -62,7 +62,7 @@ hydp=[0 diff(hyd)/ts];
 KP=1; 
 
 %% GANANCIA PARA LOS ACTUADORES
-K2=0.5; 
+K2=1; 
 
 
 %% PARAMETROS ADAPTATIVOS
@@ -114,16 +114,16 @@ for k=1:length(t)
 %     chi(:,k+1)=Dinamica(3:8,1);
 
     %% ENVIO DE DATOS AL ROBOT
-    velmsg.Linear.X = uref(k);
-    velmsg.Angular.Z =wref(k);
+    velmsg.Linear.X = uref_c(k);
+    velmsg.Angular.Z =wref_c(k);
     send(robot,velmsg);
     
     %% LECTURA DE LAS POSICIONES DEL ROBOT
     odomdata = receive(odom,3);
     pose = odomdata.Pose.Pose;
     quat = pose.Orientation;
-    angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
-    
+%     angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
+    angles=pose.Orientation.Z;
     %% LECTURA DE LAS VELOCIDADES DE CONTROL REALES DEL ROBOT
     vel=odomdata.Twist.Twist;
     

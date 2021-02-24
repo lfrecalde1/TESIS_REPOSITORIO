@@ -5,7 +5,7 @@
 %% PARAMETROS DE TIEMPO
 clc,clear all,close all;
 ts=0.1;
-tf=20;
+tf=10;
 to=0;
 t=[to:ts:tf];
 
@@ -74,7 +74,7 @@ N=10;
 
 %% OBJETOS SIMULADOS
 [world]=World(lidarSub,[hx(1),hy(1),phi(1)]);
-
+% valor_minimo=[100,100];
 %% definicion de la figura para poder ver los resultados durante el bucle
 figure()
 ph1=plot(nan,nan,'b',nan,nan,'-r',nan,nan,'*k',nan,nan,'-b');
@@ -134,8 +134,8 @@ for k=1:length(t)-N
     wref(k)=Dinamica(2);
      
     %% ENVIO DE DATOS AL ROBOT
-    velmsg.Linear.X =0;
-    velmsg.Angular.Z =0;
+    velmsg.Linear.X =0.2;
+    velmsg.Angular.Z =0.4;
     send(robot,velmsg);
     
     %% LECTURA DE LAS POSICIONES DEL ROBOT
@@ -165,14 +165,13 @@ for k=1:length(t)-N
     z0 = [uref_c(k),wref_c(k)]';
     
     %% LECTURA DE LOS OBJETOS
-    [world]=World(lidarSub,[hx(k+1),hy(k+1),phi(k+1)]);
-    
+    [world,scanMsg]=World(lidarSub,[hx(k+1),hy(k+1),phi(k+1)]);
     %% generacion del punto mas cercano al roobot
     
-    valor_minimo=minimo(world,hx(k+1),hy(k+1));
+%     valor_minimo=minimo(world,hx(k+1),hy(k+1));
     
-    x_obj_min=[hx(k+1),valor_minimo(1)];
-    y_obj_min=[hy(k+1),valor_minimo(2)];
+%     x_obj_min=[hx(k+1),valor_minimo(1)];
+%     y_obj_min=[hy(k+1),valor_minimo(2)];
     
     xworld=[world(:,1)]';
     yworld=[world(:,2)]';
@@ -197,7 +196,7 @@ for k=1:length(t)-N
     set(ph1(1),'XData',xdata,'YData',ydata);
     set(ph1(2),'XData',xdata_point,'YData',ydata_point);
     set(ph1(3),'XData',xworld,'YData',yworld);
-    set(ph1(4),'XData',x_obj_min,'YData',y_obj_min);
+%     set(ph1(4),'XData',x_obj_min,'YData',y_obj_min);
     axis([-2,2,-2,2])
     legend({'$\mathbf{\eta}_{p}$'},'Interpreter','latex','FontSize',11,'Orientation','horizontal');
     legend('boxoff')

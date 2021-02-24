@@ -85,7 +85,7 @@ function [U] = delta(R,delta_u)
 end
 
 function [obstaculo]=evasion(obj,h,r,b)
-        beta=1;
+        beta=10;
         M=size(obj);
         for j=1:M(2)
             d=norm(obj(:,j)-h,inf);
