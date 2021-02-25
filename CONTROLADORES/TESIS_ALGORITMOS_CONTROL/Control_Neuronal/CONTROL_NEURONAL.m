@@ -53,14 +53,14 @@ hxp(1)=u(1)*cos(phi(1))-a*w(1)*sin(phi(1));
 hyp(1)=u(1)*sin(phi(1))+a*w(1)*cos(phi(1));
 
 %% TRAYECTORIAS
-hxd=0.3*cos(0.3*t);
-hyd=0.3*sin(0.3*t);
+hxd=1.2*cos(0.3*t);
+hyd=1.2*sin(0.3*t);
 
 hxdp=[0 diff(hxd)/ts];
 hydp=[0 diff(hyd)/ts];
 
 %% GANANCIA PARA LOS ACTUADORES
-K2=1; 
+K2=0.2; 
 
 %% DATOS DE LA RED NEURONAL 1
 xite_1=0.5;
@@ -174,7 +174,7 @@ for k=1:length(t)
     [hy_estimado(k+1),JACOBIANO_Y,vjo,vjo_1,vjo_2,vij,vij_1,vij_2] = NEURONAL_LINEA(hy(k+1),uref_c(k),wref_c(k),N2,xite_2,alfa_2,vjo,vij,vjo_1,vij_1,vjo_2,vij_2);
     [phi_estimado(k+1),JACOBIANO_PHI,zjo,zjo_1,zjo_2,zij,zij_1,zij_2] = NEURONAL_LINEA(phi(k+1),uref_c(k),wref_c(k),N3,xite_3,alfa_3,zjo,zij,zjo_1,zij_1,zjo_2,zij_2);
     ACTUALIZACION=NEURONAL_ADAPTATIVO(JACOBIANO_X,JACOBIANO_Y,h,hd,phi(k+1),a);
-    chi(:,k+1)=chi(:,k)-ACTUALIZACION*ts;
+    chi(:,k+1)=chi(:,k)-ACTUALIZACION*0.5;
     if(chi(1,k+1)<=0.1)
         chi(1,k+1)=0.1;
     end

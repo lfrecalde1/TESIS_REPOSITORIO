@@ -4,7 +4,7 @@
 
 %% PARAMETROS DE TIEMPO
 clc,clear all,close all;
-ts=0.1;
+ts=0.05;
 tf=20;
 to=0;
 t=[to:ts:tf];
@@ -53,8 +53,8 @@ hxp(1)=u(1)*cos(phi(1))-a*w(1)*sin(phi(1));
 hyp(1)=u(1)*sin(phi(1))+a*w(1)*cos(phi(1));
 
 %% TRAYECTORIA DESEADAS
-hxd=0.3*cos(0.3*t);
-hyd=0.3*sin(0.3*t);
+hxd=0.8*cos(0.3*t);
+hyd=0.8*sin(0.3*t);
 
 hxdp=[0 diff(hxd)/ts];
 hydp=[0 diff(hyd)/ts];
@@ -64,13 +64,6 @@ KP=1;
 %% GANANCIA PARA LOS ACTUADORES
 K2=0.5; 
 
-%% FUERZA DE INTERACCION CON EL OBJETO 
-
-F_1=0;
-F_2=0;
-xa_1=0;
-xa_2=0;
-
 
 %% PARAMETROS ADAPTATIVOS
 chi=zeros(6,length(t));
@@ -78,14 +71,6 @@ chi=zeros(6,length(t));
 %% BUCLE DE SIMULACION 
 for k=1:length(t)
     tic;
-    %% TOMA DE DATOS DESDE LIDAR Y SACAR EL ANGULO FUERZA Y DISTANCIA
-    %[F(k),angulo(k),d]=evasion_obstaculos(lidarSub);
-    
-    %% GENERACION DE IMPEDANCIA
-    %[xa(k),xa_1,xa_2,F_1,F_2] = impedancia_1(F(k),F_1,F_2,xa_1,xa_2);
-    
-    %% ROTACION DEL PUNTO DESEADO
-    %[hxd(k),hyd(k),hxdp(k),hydp(k)]=ROTACION_REFERENCIA(hxd(k),hyd(k),hxdp(k),hydp(k),xa(k));
     %% ERROR DE CONTROL
     hxe(k)=hxd(k)-hx(k);
     

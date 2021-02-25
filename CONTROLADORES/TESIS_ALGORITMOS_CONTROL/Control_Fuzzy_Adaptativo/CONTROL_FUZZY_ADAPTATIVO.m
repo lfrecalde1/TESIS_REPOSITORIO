@@ -3,6 +3,8 @@
 %XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 %% PARAMETROS;
+clc,clear all,close all;
+ts=0.1;
 tf=20;
 to=0;
 t=[to:ts:tf];
@@ -28,7 +30,7 @@ pose = odomdata.Pose.Pose;
 vel=odomdata.Twist.Twist;
 quat = pose.Orientation;
 angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
-% angles=pose.Orientation.Z;
+
 
 %% DISTANCIA HACIA EL PUNTO DE INTERES
 a=0.1;
@@ -58,7 +60,7 @@ hxdp=[0 diff(hxd)/ts];
 hydp=[0 diff(hyd)/ts];
 
 %% GANANCIA PARA LOS ACTUADORES
-K2=0.5; 
+K2=0.2; 
 
 %% LECTURA DE CONTROLADOR FUZZY
 self_x=readfis('fuzzpid');
@@ -129,7 +131,7 @@ for k=1:length(t)
     pose = odomdata.Pose.Pose;
     quat = pose.Orientation;
     angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
-%     angles=pose.Orientation.Z;
+
     %% LECTURA DE LAS VELOCIDADES DE CONTROL REALES DEL ROBOT
     vel=odomdata.Twist.Twist;
     

@@ -30,7 +30,7 @@ pose = odomdata.Pose.Pose;
 vel=odomdata.Twist.Twist;
 quat = pose.Orientation;
 angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
-% angles=pose.Orientation.Z;
+
 
 %% DISTANCIA HACIA EL PUNTO DE INTERES
 a=0.1;
@@ -133,7 +133,7 @@ for k=1:length(t)-N
     pose = odomdata.Pose.Pose;
     quat = pose.Orientation;
     angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
-%     angles=pose.Orientation.Z;
+
     
     %% LECTURA DE LAS VELOCIDADES DE CONTROL REALES DEL ROBOT
     vel=odomdata.Twist.Twist;

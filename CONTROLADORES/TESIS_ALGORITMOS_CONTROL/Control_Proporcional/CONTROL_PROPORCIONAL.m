@@ -30,8 +30,8 @@ odomdata = receive(odom,3);
 pose = odomdata.Pose.Pose;
 vel=odomdata.Twist.Twist;
 quat = pose.Orientation;
-% angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
-angles=pose.Orientation.Z;
+angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
+
 %% DISTANCIA HACIA EL PUNTO DE INTERES
 a=0.1;
 
@@ -62,7 +62,7 @@ hydp=[0 diff(hyd)/ts];
 KP=1; 
 
 %% GANANCIA PARA LOS ACTUADORES
-K2=1; 
+K2=0.2; 
 
 
 %% PARAMETROS ADAPTATIVOS
@@ -122,8 +122,8 @@ for k=1:length(t)
     odomdata = receive(odom,3);
     pose = odomdata.Pose.Pose;
     quat = pose.Orientation;
-%     angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
-    angles=pose.Orientation.Z;
+    angles = quat2eul([quat.W quat.X quat.Y quat.Z]);
+
     %% LECTURA DE LAS VELOCIDADES DE CONTROL REALES DEL ROBOT
     vel=odomdata.Twist.Twist;
     
