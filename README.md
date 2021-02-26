@@ -5,10 +5,9 @@ A continuación se presenta los algoritmos disponibles en el robot
   - Control Proporcional + Compensacion Dinamica
   - Control Fuzzy Adaptativo + Compensacion Dinamica
   - Control MPC Optimización 
-  - Control Optimización + Compensacion Dinamica
   - Control Neuronal
 
-   
+
 ## Características!
 
 
