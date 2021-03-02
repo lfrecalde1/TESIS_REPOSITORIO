@@ -1,0 +1,1063 @@
+#VRML_SIM R2020b utf8
+WorldInfo {
+  info [
+    "Unviversal Robot UR3e, UR5e and UR10e grasping cans using Robotiq 3F grippers."
+  ]
+  title "Universal Robot"
+  basicTimeStep 16
+  physicsDisableAngularThreshold 0.1
+  coordinateSystem "NUE"
+  contactProperties [
+    ContactProperties {
+      bounce 0.1
+    }
+    ContactProperties {
+      material1 "slope"
+      coulombFriction [
+        0.5
+      ]
+    }
+  ]
+}
+Viewpoint {
+  orientation 0.2582010772113243 0.9206937675133375 0.29266907965996 3.896319863009339
+  position -4.291829609158615 4.704508969223816 -3.7842832451954513
+  exposure 1.7
+}
+TexturedBackground {
+  texture "factory"
+}
+Floor {
+  translation 1 0 0
+  size 13 9
+  appearance ThreadMetalPlate {
+  }
+}
+OfficeChair {
+  hidden position_0_0 -9.610851921894e-07
+  hidden rotation_1 0 -1 0 9.610960183499607e-07
+  translation 0.5059930000000809 -6.448501611586166e-05 2.3691700000000213
+  rotation -4.389238333798895e-06 0.9999999994913384 3.159205280503368e-05 2.879790000251898
+  name "office chair(3)"
+}
+PlasticCrate {
+  translation 0.7346500480292297 0.3197515518060611 -1.6300099406221198
+  rotation -0.0003615964423534312 0.9999999338574447 -3.9155066085589204e-05 1.5708000448877057
+  name "plastic crate(2)"
+  size 0.6 0.4 0.45
+  mass 1
+}
+CardboardBox {
+  translation 0.91 0.17 -1.45
+  name "cardboard box(5)"
+  size 0.6 0.3 0.6
+}
+RobotisOp2 {
+  hidden position_0_0 5.364318871023577e-11
+  hidden position_0_1 -0.019998138184527052
+  hidden position_0_2 -0.009998592974101665
+  hidden position_0_3 0.7199994482601773
+  hidden position_0_4 -0.8399981920709356
+  hidden translation_10 0 0.051 0
+  hidden rotation_10 0 1 0 0
+  hidden position_10_0 0.190000087369157
+  hidden translation_11 0 0 0
+  hidden rotation_11 1 0 0 0.5953999126308438
+  hidden translation_15 0.037 -0.1222 -0.005
+  hidden rotation_15 0 1 0 0.019998138184522268
+  hidden position_15_0 -0.01000209824183288
+  hidden translation_16 0 0 0
+  hidden rotation_16 0 0 1 0.010002098241848882
+  hidden position_16_0 1.150002411601967
+  hidden translation_17 0 0 0
+  hidden rotation_17 -1 0 0 1.150002411601967
+  hidden position_17_0 -2.2500000526527724
+  hidden translation_18 0 -0.093 0
+  hidden rotation_18 0.9999999999999999 0 0 2.2500000526527724
+  hidden position_18_0 -1.2299977131036677
+  hidden translation_19 0 -0.093 0
+  hidden rotation_19 -1 0 0 1.2299977131036675
+  hidden position_19_0 -0.019999999778287765
+  hidden translation_20 0 0 0
+  hidden rotation_20 0 0 -1 0.01999999977828765
+  hidden translation_21 -0.037 -0.1222 -0.005
+  hidden rotation_21 0 1 0 0.009998592974085013
+  hidden position_21_0 0.01999856846480494
+  hidden translation_22 0 0 0
+  hidden rotation_22 0 0 -1 0.019998568464808315
+  hidden translation_23 0 0 0
+  hidden rotation_23 -1 0 0 1.1499983373865839
+  hidden position_23_0 2.250000110668329
+  hidden translation_24 0 -0.093 0
+  hidden rotation_24 1 0 0 2.250000110668329
+  hidden position_24_0 1.220000000064572
+  hidden translation_25 0 -0.093 0
+  hidden rotation_25 -1 0 0 1.2200000000645719
+  hidden position_25_0 0.049999895878064506
+  hidden translation_26 0 0 0
+  hidden rotation_26 0 0 1 0.04999989587806516
+  hidden translation_27 0.082 0 0
+  hidden rotation_27 1 0 0 0.7199994482601775
+  hidden position_27_0 0.3599999596741709
+  hidden translation_28 0 -0.016 0
+  hidden rotation_28 0 0 1 0.42540004032582923
+  hidden position_28_0 -0.5199999173047404
+  hidden translation_29 0 -0.06 0.016
+  hidden rotation_29 -1 0 0 2.090799917304741
+  hidden translation_30 -0.082 0 0
+  hidden rotation_30 1 0 0 0.8399981920709356
+  hidden position_30_0 -0.32999874728082823
+  hidden translation_31 0 -0.016 0
+  hidden rotation_31 0 0 -1 0.45540125271916954
+  hidden translation_32 0 -0.06 0.016
+  hidden rotation_32 -1 0 0 2.0807999057923405
+  translation 0.0015910590769046226 0.7959963193786277 3.217559602563428
+  rotation -0.9998746542620033 0.009891234953126842 -0.012362816650800306 1.4738627981596286
+  controller ""
+}
+SolidBox {
+  translation -3.885 0.275 -2.1677
+  rotation 0 1 0 -3.1415853071795863
+  name "box(3)"
+  size 0.7 0.51 1.3
+  appearance GalvanizedMetal {
+  }
+}
+Puma560 {
+  hidden translation_1 0 0.669 0
+  hidden rotation_1 0 1 0 2.5004315386426206
+  hidden translation_2 0 0 -0.1622
+  hidden rotation_2 0 0 1 3.7004797672773395
+  hidden translation_3 0.42 0 0.086
+  hidden rotation_3 0 0 -1 2.199930581718198
+  hidden translation_4 -0.02 0.353 -0.074
+  hidden rotation_4 0 1 0 1.5708028516356125
+  hidden translation_5 0 0.079 0
+  hidden rotation_5 0 0 -1 1.5707195725133278
+  hidden translation_6 0 -0.08 0
+  hidden rotation_6 0 1 0 2.7669542639219764
+  hidden translation_7 -0.007122729614537457 0.23 0
+  hidden rotation_7 0 1 0 -1.5708
+  hidden translation_8 0.007120681147699672 0.23 0
+  hidden rotation_8 0 1 0 1.5708
+  translation -3.91 0.57 -2.15
+  controller ""
+}
+Youbot {
+  hidden position_0_0 2.2667413735976647e-10
+  hidden position_0_2 -2.3263486612734257e-10
+  hidden position_0_3 -2.272466028482645e-10
+  hidden position_1_0 -5.697473287756122e-06
+  hidden translation_2 0 0 0.077
+  hidden rotation_2 0 0 -1 5.697468287162477e-06
+  hidden position_2_0 -5.36664306116748e-07
+  hidden translation_3 0.033 0 0.07
+  hidden rotation_3 0 1 0 5.364418029785172e-07
+  hidden translation_4 0 0 0.155
+  hidden rotation_4 0 0.9999999999999999 0 4.969040155569645e-07
+  hidden translation_5 0 0 0.135
+  hidden position_5_0 8.81309387366518e-13
+  hidden translation_6 0 0 0.081
+  hidden position_6_0 8.257169093467739e-13
+  hidden position_6_1 -1.655799892305772e-13
+  hidden translation_7 0 6.462696256228539e-13 0.09
+  hidden rotation_7 1 0 0 4.71239
+  hidden translation_8 0 -1.8764792249354927e-15 0.09
+  hidden rotation_8 0 -0.7071067811865476 0.7071067811865476 3.14159
+  hidden position_9_0 -3.4204942844766743e-06
+  hidden translation_10 0 0 0.077
+  hidden rotation_10 0 0 -1 3.42052252188355e-06
+  hidden position_10_0 -5.367323408208613e-07
+  hidden translation_11 0.033 0 0.07
+  hidden rotation_11 0 1 0 5.364418029785172e-07
+  hidden position_11_0 -8.276513109014713e-07
+  hidden translation_12 0 0 0.155
+  hidden rotation_12 0 0.9999999999999999 0 8.275177107402635e-07
+  hidden translation_13 0 0 0.135
+  hidden position_13_0 -5.873215241886158e-13
+  hidden translation_14 0 0 0.081
+  hidden position_14_0 7.51530054089339e-13
+  hidden position_14_1 -1.6555593129237216e-13
+  hidden translation_15 0 6.447602885366281e-13 0.09
+  hidden rotation_15 1 0 0 4.71239
+  hidden translation_16 0 -2.941619113683897e-15 0.09
+  hidden rotation_16 0 -0.7071067811865476 0.7071067811865476 3.14159
+  hidden translation_17 0.228 -0.158 -0.055
+  hidden translation_18 0.228 0.158 -0.055
+  hidden translation_19 -0.228 -0.158 -0.055
+  hidden translation_20 -0.228 0.158 -0.055
+  translation 1.6499997513551612 0.8113340657660445 3.4199984507346897
+  rotation -0.5773511351462727 0.5773498360937821 0.5773498363278484 2.0943938034740888
+  controller ""
+  numberOfArms 2
+}
+Spot {
+  hidden position_0_1 3.409867012345888e-05
+  hidden position_0_3 5.208910307903563e-05
+  hidden translation_18 -0.0528 0.0006 0
+  hidden rotation_18 0 0 -1 4.3609831120158713e-05
+  hidden position_18_0 2.7717273797088503e-05
+  hidden translation_19 0 -0.00053 0
+  hidden rotation_19 1 0 0 2.7717281390863592e-05
+  hidden position_19_1 8.594548836996448e-05
+  hidden translation_21 -0.1122 -0.319729 0.182338
+  hidden rotation_21 1 0 0 8.594549034678919e-05
+  hidden translation_22 0.0528 0.0006 0
+  hidden rotation_22 0 0 1 4.3609678371348565e-05
+  hidden position_22_0 2.771726777167873e-05
+  hidden translation_23 0 -0.00053 0
+  hidden rotation_23 0.9999999999999999 0 0 2.7717265368753345e-05
+  hidden position_23_1 8.594606754758594e-05
+  hidden translation_25 0.1122 -0.319729 0.182338
+  hidden rotation_25 1 0 0 8.594606906038852e-05
+  hidden translation_26 -0.0528 0.0006 0
+  hidden rotation_26 0 0 -1 6.663115503736276e-05
+  hidden position_26_0 3.005109379587603e-05
+  hidden translation_27 0 -0.00053 0
+  hidden rotation_27 1 0 0 3.0051087214025526e-05
+  hidden position_27_1 0.0001224937213642434
+  hidden translation_29 -0.1122 -0.319729 0.182338
+  hidden rotation_29 1 0 0 0.00012249372287645641
+  hidden translation_30 0.0528 0.0006 0
+  hidden rotation_30 0 0 1 6.663083512195324e-05
+  hidden position_30_0 3.005119740197585e-05
+  hidden translation_31 0 -0.00053 0
+  hidden rotation_31 0.9999999999999999 0 0 3.005119065850647e-05
+  hidden position_31_1 0.0001224943032878747
+  hidden translation_33 0.1122 -0.319729 0.182338
+  hidden rotation_33 1 0 0 0.00012249430293969325
+  translation 6.471256417493103 0.6114015368613849 1.4701618691113225
+  rotation 0.005086370875974753 -0.9999868402555164 0.0006694378987031247 0.26179940709794014
+  controller ""
+}
+Desk {
+  translation -1.15 0 3.46
+  name "desk(12)"
+}
+Solid {
+  translation 7.25 1.95001 2.08002
+  rotation 0.5773489358533613 0.5773489358533613 0.5773529358529169 -2.094395307179586
+  children [
+    Shape {
+      appearance Appearance {
+        texture ImageTexture {
+          url [
+            "/home/fer/ros_ws/src/Wall3_simulator/espe/mision.jpeg"
+          ]
+        }
+      }
+      geometry Box {
+        size 0.7 0.01 0.5
+      }
+    }
+  ]
+  name "solid(2)"
+}
+Solid {
+  translation -5.09 1.78001 0.10002
+  rotation 0.5773519358547601 0.5773499358549823 -0.5773489358550934 2.0944
+  children [
+    Shape {
+      appearance Appearance {
+        texture ImageTexture {
+          url [
+            "/home/fer/ros_ws/src/Wall3_simulator/espe/mecatronica.jpeg"
+          ]
+        }
+      }
+      geometry Cylinder {
+        height 0.01
+        radius 0.83
+      }
+    }
+  ]
+  name "solid(1)"
+}
+Solid {
+  translation 7.25 1.95001 -2.32998
+  rotation 0.5773489358533613 0.5773489358533613 0.5773529358529169 -2.094395307179586
+  children [
+    Shape {
+      appearance Appearance {
+        texture ImageTexture {
+          url [
+            "/home/fer/ros_ws/src/Wall3_simulator/espe/vision.jpeg"
+          ]
+        }
+      }
+      geometry Box {
+        size 0.7 0.01 0.5
+      }
+    }
+  ]
+}
+Blackboard {
+  translation 7.17 1.62 2.63368e-05
+  rotation 0 -1 0 1.5708
+}
+Panel {
+  translation -3.36 0 -4.27
+  name "panel(8)"
+  size 1.2 2.9 0.05
+  appearance VarnishedPine {
+    colorOverride 0.643137 0 0
+    textureTransform TextureTransform {
+      scale 5 5
+    }
+  }
+  borderAppearance BrushedAluminium {
+    colorOverride 0.180392 0.203922 0.211765
+  }
+}
+Panel {
+  translation 6.1 0 -4.27
+  name "panel(7)"
+  size 1.2 2.9 0.05
+  appearance VarnishedPine {
+    colorOverride 0.643137 0 0
+    textureTransform TextureTransform {
+      scale 5 5
+    }
+  }
+  borderAppearance BrushedAluminium {
+    colorOverride 0.180392 0.203922 0.211765
+  }
+}
+Panel {
+  translation 4.91 0 -4.27
+  name "panel(6)"
+  size 1.2 2.9 0.05
+  appearance VarnishedPine {
+    colorOverride 0.533333 0.541176 0.521569
+    textureTransform TextureTransform {
+      scale 5 5
+    }
+  }
+  borderAppearance BrushedAluminium {
+    colorOverride 0.180392 0.203922 0.211765
+  }
+}
+Panel {
+  translation 3.72 0 -4.27
+  name "panel(5)"
+  size 1.2 2.9 0.05
+  appearance VarnishedPine {
+    colorOverride 0.643137 0 0
+    textureTransform TextureTransform {
+      scale 5 5
+    }
+  }
+  borderAppearance BrushedAluminium {
+    colorOverride 0.180392 0.203922 0.211765
+  }
+}
+OfficeChair {
+  hidden position_0_0 -9.610851936395702e-07
+  hidden rotation_1 0 -1 0 9.610960183499607e-07
+  translation 4.48752000063424 -6.448501611586166e-05 -3.4487000022709204
+  rotation -4.389238333803595e-06 0.9999999994913384 3.159205280500696e-05 2.879790000251898
+  name "office chair(2)"
+}
+Panel {
+  translation 2.53 0 -4.27
+  name "panel(4)"
+  size 1.2 2.9 0.05
+  appearance VarnishedPine {
+    colorOverride 0.533333 0.541176 0.521569
+    textureTransform TextureTransform {
+      scale 5 5
+    }
+  }
+  borderAppearance BrushedAluminium {
+    colorOverride 0.180392 0.203922 0.211765
+  }
+}
+Panel {
+  translation 1.35 0 -4.27
+  name "panel(3)"
+  size 1.2 2.9 0.05
+  appearance VarnishedPine {
+    colorOverride 0.643137 0 0
+    textureTransform TextureTransform {
+      scale 5 5
+    }
+  }
+  borderAppearance BrushedAluminium {
+    colorOverride 0.180392 0.203922 0.211765
+  }
+}
+Panel {
+  translation 0.16 0 -4.27
+  name "panel(2)"
+  size 1.2 2.9 0.05
+  appearance VarnishedPine {
+    colorOverride 0.533333 0.541176 0.521569
+    textureTransform TextureTransform {
+      scale 5 5
+    }
+  }
+  borderAppearance BrushedAluminium {
+    colorOverride 0.180392 0.203922 0.211765
+  }
+}
+Panel {
+  translation -1.02 0 -4.27
+  name "panel(1)"
+  size 1.2 2.9 0.05
+  appearance VarnishedPine {
+    colorOverride 0.643137 0 0
+    textureTransform TextureTransform {
+      scale 5 5
+    }
+  }
+  borderAppearance BrushedAluminium {
+    colorOverride 0.180392 0.203922 0.211765
+  }
+}
+Panel {
+  translation -2.21 0 -4.27
+  size 1.2 2.9 0.05
+  appearance VarnishedPine {
+    colorOverride 0.533333 0.541176 0.521569
+    textureTransform TextureTransform {
+      scale 5 5
+    }
+  }
+  borderAppearance BrushedAluminium {
+    colorOverride 0.180392 0.203922 0.211765
+  }
+}
+Wall {
+  translation -5.385 0 -0.0199883
+  rotation 0 1 0 -1.5707953071795862
+  name "wall(5)"
+  size 9 2.9 0.2
+  appearance Roughcast {
+    colorOverride 0.793332 0.768414 0.674327
+    textureTransform TextureTransform {
+      scale 2 1
+    }
+  }
+}
+OfficeChair {
+  hidden position_0_0 -9.61085193794857e-07
+  hidden rotation_1 0 -1 0 9.610960183499607e-07
+  translation 5.85000000063531 -6.44850161158339e-05 -2.3900000022745993
+  rotation -4.3892383338190795e-06 0.9999999994913383 3.159205280502848e-05 2.8797900002515786
+  name "office chair(1)"
+}
+OfficeChair {
+  hidden position_0_0 -9.610851925004246e-07
+  hidden rotation_1 0 -1 0 9.610960183499607e-07
+  translation 5.850029267510831 -6.448501611588942e-05 -0.5899999895994242
+  rotation 3.13957549855789e-05 0.9999999990000084 3.184791361432486e-05 -1.5707953701564508
+}
+Wall {
+  translation 7.415 0 -0.02
+  rotation 0 1 0 -1.5707953071795862
+  name "wall(3)"
+  size 9 2.9 0.2
+  appearance Roughcast {
+    colorOverride 0.793332 0.768414 0.674327
+    textureTransform TextureTransform {
+      scale 2 1
+    }
+  }
+}
+Keyboard {
+  translation 4.4 0.73 3.3
+}
+DesktopComputer {
+  translation 4.87 0.74 3.52
+}
+Monitor {
+  translation 4.39 0.74 3.57
+}
+WoodenChair {
+  translation -2.3 0 0.71998
+  rotation 0 -1 0 -1.3090053071795866
+  name "wooden chair(12)"
+  color 0.533333 0.541176 0.521569
+}
+WoodenChair {
+  translation -2.29 0 1.33998
+  rotation 0 1 0 1.8326
+  name "wooden chair(11)"
+  color 0.533333 0.541176 0.521569
+}
+WoodenChair {
+  translation -2.44932 0 -0.254839
+  rotation 0 1 0 1.8326
+  name "wooden chair(10)"
+  color 0.533333 0.541176 0.521569
+}
+WoodenChair {
+  translation -2.26748 0 -0.883082
+  rotation 0 -1 0 -1.3090053071795866
+  name "wooden chair(9)"
+  color 0.533333 0.541176 0.521569
+}
+Desk {
+  translation -1.57 0 -1.93998
+  rotation 0 1 0 1.5708
+  name "desk(11)"
+}
+Desk {
+  translation -1.55 0 -0.469981
+  rotation 0 1 0 1.5708
+  name "desk(10)"
+}
+Desk {
+  translation 5.04 0 1.07
+  rotation 0 1 0 1.5708
+  name "desk(9)"
+}
+Desk {
+  translation 2.35 0 -0.47
+  rotation 0 1 0 1.5708
+  name "desk(8)"
+}
+WoodenChair {
+  translation 1.74 0 0.80998
+  rotation 0 -1 0 -1.3090053071795866
+  name "wooden chair(8)"
+  color 0.533333 0.541176 0.521569
+}
+WoodenChair {
+  translation 1.67 0 -0.26002
+  rotation 0 -1 0 -1.5707953071795862
+  name "wooden chair(7)"
+  color 0.533333 0.541176 0.521569
+}
+WoodenChair {
+  translation 1.67 0 -0.94002
+  rotation 0 1 0 1.8326
+  name "wooden chair(6)"
+  color 0.533333 0.541176 0.521569
+}
+WoodenChair {
+  translation 1.79 0 1.48998
+  rotation 0 1 0 1.5708
+  name "wooden chair(5)"
+  color 0.533333 0.541176 0.521569
+}
+WoodenChair {
+  translation 5.7122 0 -3.73394
+  rotation 0 1 0 0.2618
+  name "wooden chair(4)"
+  color 0.533333 0.541176 0.521569
+}
+WoodenChair {
+  translation 6.57 0 -0.38002
+  rotation 0 1 0 -1.5707953071795862
+  name "wooden chair(3)"
+  color 0.533333 0.541176 0.521569
+}
+WoodenChair {
+  translation 6.57 0 -0.98002
+  rotation 0 1 0 -1.5707953071795862
+  name "wooden chair(2)"
+  color 0.533333 0.541176 0.521569
+}
+WoodenChair {
+  translation 6.57 0 -1.66002
+  rotation 0 1 0 -1.5707953071795862
+  name "wooden chair(1)"
+  color 0.533333 0.541176 0.521569
+}
+WoodenChair {
+  translation 6.57 0 -2.29002
+  rotation 0 1 0 -1.5707953071795862
+  color 0.533333 0.541176 0.521569
+}
+Cabinet {
+  hidden translation_7 -2.5824224203496726e-08 0 0.00013411402477815442
+  hidden rotation_7 0 -1 0 0.00038510846340131634
+  hidden translation_11 3.3367254514971023e-09 0 3.3597828483617936e-05
+  hidden rotation_11 0 1 0 0.0001986274483324164
+  hidden translation_15 0 0 0.03005504776371422
+  hidden rotation_15 0 1 0 0
+  hidden translation_23 0 0 0.4655813365916769
+  hidden rotation_23 0 1 0 0
+  hidden translation_31 0 0 0.46678128041010625
+  hidden rotation_31 0 1 0 0
+  hidden translation_39 0 0 0.47147200316028975
+  hidden rotation_39 0 1 0 0
+  translation 2.16 0 -4.12
+  name "cabinet(3)"
+  rowsHeights [
+    0.25, 0.2, 0.2, 0.4, 0.9
+  ]
+  columnsWidths [
+    0.7, 0.17, 0.17
+  ]
+  primaryAppearance PaintedWood {
+    colorOverride 0.533333 0.541176 0.521569
+  }
+  secondaryAppearance PaintedWood {
+    colorOverride 0.533333 0.541176 0.521569
+  }
+}
+Cabinet {
+  hidden translation_7 -1.0851392728827847e-08 0 6.571798903303775e-05
+  hidden rotation_7 0 -1 0 0.00033024113768986824
+  hidden translation_11 6.7571754303052955e-09 0 4.781163426189011e-05
+  hidden rotation_11 0 0.9999999999999999 0 0.0002826581830629283
+  translation -1.18 0 -4.22
+  name "cabinet(1)"
+  depth 0.7
+  innerThickness 0.03
+  rowsHeights [
+    0.2, 0.2, 0.2, 0.2, 0.2
+  ]
+  layout [
+    "RightSidedDoor (1, 1, 1, 5, 1.5)"
+    "LeftSidedDoor (2, 1, 2, 5, 1.5)"
+  ]
+  handle CabinetHandle {
+    handleColor 0.333333 0.341176 0.32549
+  }
+  primaryAppearance GlossyPaint {
+    baseColor 0.333333 0.341176 0.32549
+  }
+  secondaryAppearance GlossyPaint {
+    baseColor 0.333333 0.341176 0.32549
+  }
+}
+Cabinet {
+  hidden translation_7 -2.5824216931535915e-08 0 0.00013411400668334857
+  hidden rotation_7 0 -0.9999999999999999 0 0.0003851084103562469
+  hidden translation_11 3.3367252294524974e-09 0 3.359782784378183e-05
+  hidden rotation_11 0 0.9999999999999999 0 0.0001986274550397855
+  hidden translation_15 0 0 0.035835980989225615
+  hidden rotation_15 0 1 0 0
+  hidden translation_23 0 0 0.4687779600387834
+  hidden rotation_23 0 1 0 0
+  hidden translation_31 0 0 0.46772687887959824
+  hidden rotation_31 0 1 0 0
+  hidden translation_39 0 0 0.4714612559353803
+  hidden rotation_39 0 1 0 0
+  translation 0.96 0 -4.12
+  rowsHeights [
+    0.25, 0.2, 0.2, 0.4, 0.9
+  ]
+  columnsWidths [
+    0.7, 0.17, 0.17
+  ]
+  primaryAppearance PaintedWood {
+    colorOverride 0.533333 0.541176 0.521569
+  }
+  secondaryAppearance PaintedWood {
+    colorOverride 0.533333 0.541176 0.521569
+  }
+}
+Wall {
+  translation -5.045 0 4.37
+  name "wall(4)"
+  size 0.9 2.9 0.2
+  appearance Roughcast {
+    colorOverride 0.793332 0.768414 0.674327
+    textureTransform TextureTransform {
+      scale 2 1
+    }
+  }
+}
+Window {
+  translation -4.14 0 4.37
+  name "window(8)"
+  size 0.9 2.9 0.2
+  wallAppearance Roughcast {
+    colorOverride 0.792157 0.768627 0.67451
+  }
+  frameAppearance VarnishedPine {
+    colorOverride 0.180392 0.203922 0.211765
+  }
+}
+Window {
+  translation -3.25 0 4.37
+  name "window(7)"
+  size 0.9 2.9 0.2
+  wallAppearance Roughcast {
+    colorOverride 0.792157 0.768627 0.67451
+  }
+  frameAppearance VarnishedPine {
+    colorOverride 0.180392 0.203922 0.211765
+  }
+}
+Window {
+  translation -2.35 0 4.37
+  name "window(3)"
+  size 0.9 2.9 0.2
+  wallAppearance Roughcast {
+    colorOverride 0.792157 0.768627 0.67451
+  }
+  frameAppearance VarnishedPine {
+    colorOverride 0.180392 0.203922 0.211765
+  }
+}
+Wall {
+  translation -0.905 0 4.37
+  name "wall(2)"
+  size 2 2.9 0.2
+  appearance Roughcast {
+    colorOverride 0.793332 0.768414 0.674327
+    textureTransform TextureTransform {
+      scale 2 1
+    }
+  }
+}
+Window {
+  translation 0.55 0 4.37
+  name "window(6)"
+  size 0.9 2.9 0.2
+  wallAppearance Roughcast {
+    colorOverride 0.792157 0.768627 0.67451
+  }
+  frameAppearance VarnishedPine {
+    colorOverride 0.180392 0.203922 0.211765
+  }
+}
+Window {
+  translation 1.43 0 4.37
+  name "window(5)"
+  size 0.9 2.9 0.2
+  wallAppearance Roughcast {
+    colorOverride 0.792157 0.768627 0.67451
+  }
+  frameAppearance VarnishedPine {
+    colorOverride 0.180392 0.203922 0.211765
+  }
+}
+Window {
+  translation 2.33 0 4.37
+  name "window(4)"
+  size 0.9 2.9 0.2
+  wallAppearance Roughcast {
+    colorOverride 0.792157 0.768627 0.67451
+  }
+  frameAppearance VarnishedPine {
+    colorOverride 0.180392 0.203922 0.211765
+  }
+}
+Desk {
+  translation 6.42 0 -3.44
+  rotation 0 1 0 1.5708
+  name "desk(7)"
+}
+Desk {
+  translation 5.04 0 -0.47
+  rotation 0 1 0 1.5708
+  name "desk(6)"
+}
+Desk {
+  translation 2.4 0 1.05
+  rotation 0 1 0 1.5708
+  name "desk(5)"
+}
+Desk {
+  translation 4.54 0 3.51
+  name "desk(4)"
+}
+Keyboard {
+  translation 3.31 0.73 3.3
+  name "keyboard(1)"
+}
+Monitor {
+  translation 3.36 0.74 3.57
+  name "monitor(1)"
+}
+DesktopComputer {
+  translation 2.87 0.74 3.52
+  name "desktop computer(1)"
+}
+Desk {
+  translation 3.13 0 3.5
+  name "desk(3)"
+}
+Desk {
+  translation 1.72 0 3.47
+  name "desk(2)"
+}
+Desk {
+  translation 0.26 0 3.46
+  name "desk(1)"
+}
+Window {
+  translation 5.24 0 4.37
+  name "window(2)"
+  size 0.9 2.9 0.2
+  wallAppearance Roughcast {
+    colorOverride 0.792157 0.768627 0.67451
+  }
+  frameAppearance VarnishedPine {
+    colorOverride 0.180392 0.203922 0.211765
+  }
+}
+Window {
+  translation 6.14 0 4.37
+  name "window(1)"
+  size 0.9 2.9 0.2
+  wallAppearance Roughcast {
+    colorOverride 0.792157 0.768627 0.67451
+  }
+  frameAppearance VarnishedPine {
+    colorOverride 0.180392 0.203922 0.211765
+  }
+}
+Window {
+  translation 7.04 0 4.37
+  size 0.9 2.9 0.2
+  wallAppearance Roughcast {
+    colorOverride 0.792157 0.768627 0.67451
+  }
+  frameAppearance VarnishedPine {
+    colorOverride 0.180392 0.203922 0.211765
+  }
+}
+Wall {
+  translation 3.775 0 4.37
+  name "wall(1)"
+  size 2 2.9 0.2
+  appearance Roughcast {
+    colorOverride 0.793332 0.768414 0.674327
+    textureTransform TextureTransform {
+      scale 2 1
+    }
+  }
+}
+CardboardBox {
+  translation 6.61 0.18 2.98
+  name "cardboard box(2)"
+  size 0.6 0.3 0.6
+}
+CardboardBox {
+  translation 6.61 0.18 2.98
+  name "cardboard box(4)"
+  size 0.6 0.3 0.6
+}
+CardboardBox {
+  translation 6.61 0.51 2.96
+  name "cardboard box(3)"
+  size 0.6 0.3 0.6
+}
+Cabinet {
+  hidden translation_7 -1.0851392562294393e-08 0 6.571798866328711e-05
+  hidden rotation_7 0 -1 0 0.0003302411202082185
+  hidden translation_11 6.757175874394505e-09 0 4.781163567703413e-05
+  hidden rotation_11 0 1 0 0.00028265818934739814
+  translation -0.26 0 -4.22
+  name "cabinet(2)"
+  depth 0.7
+  innerThickness 0.03
+  rowsHeights [
+    0.2, 0.2, 0.2, 0.2, 0.2
+  ]
+  layout [
+    "RightSidedDoor (1, 1, 1, 5, 1.5)"
+    "LeftSidedDoor (2, 1, 2, 5, 1.5)"
+  ]
+  handle CabinetHandle {
+    handleColor 0.333333 0.341176 0.32549
+  }
+  primaryAppearance GlossyPaint {
+    baseColor 0.333333 0.341176 0.32549
+  }
+  secondaryAppearance GlossyPaint {
+    baseColor 0.333333 0.341176 0.32549
+  }
+}
+CardboardBox {
+  translation 5.61 0.3 3.76
+}
+CardboardBox {
+  translation 5.60161 0.77 3.69932
+  rotation 0 -1 0 -1.5707953071795862
+  name "cardboard box(1)"
+  size 0.4 0.3 0.6
+}
+Wall {
+  translation 1.645 0 -4.39
+  size 11.4 2.9 0.2
+  appearance Roughcast {
+    colorOverride 0.793332 0.768414 0.674327
+    textureTransform TextureTransform {
+      scale 2 1
+    }
+  }
+}
+Door {
+  hidden translation_5 1.0904495084673727e-09 0 0.0010000042081102778
+  hidden rotation_5 0 1 0 0
+  translation -4.67 0.03 -4.41
+  size 1.2 2.9 0.2
+  position -9.148074909431844e-09
+  doorAppearance GenericDoorAppearance {
+    colorOverride 0.827451 0.843137 0.811765
+  }
+  wallAppearance Roughcast {
+    colorOverride 0.792157 0.768627 0.67451
+  }
+}
+SolidBox {
+  translation -4.115 0.275 2.1523
+  rotation 0 1 0 1.5708
+  size 0.7 0.51 1.3
+  appearance GalvanizedMetal {
+  }
+}
+SolidBox {
+  translation 3.6 0.385 -4.13
+  rotation 0 1 0 3.1415919999999997
+  name "box(2)"
+  size 0.2 0.75 0.18
+  appearance CorrugatedMetal {
+    textureTransform TextureTransform {
+      scale 0.7 0.7
+    }
+  }
+}
+SolidBox {
+  translation 3.3 0.375 -4.12
+  rotation 0 1 0 3.1415919999999997
+  name "box(4)"
+  size 0.2 0.75 0.18
+  appearance CorrugatedMetal {
+    textureTransform TextureTransform {
+      scale 0.7 0.7
+    }
+  }
+}
+FireExtinguisher {
+  translation -4.714787332546305 -0.0023543999999998677 3.897857070617149
+  rotation -0.0015168308767296757 0.9999988251479257 -0.00022119416775443217 -3.1415892346682086
+}
+UR10e {
+  hidden translation_1 0 0 0.181
+  hidden rotation_1 0 0 -0.9999999999999999 0.001421477366963081
+  hidden translation_2 0 0.176 0
+  hidden rotation_2 0 0.9999999999999999 0 1.5726573655770222
+  hidden translation_3 0 -0.137 0.613
+  hidden rotation_3 0 1 0 0.0005226909543264952
+  hidden translation_4 0 0 0.571
+  hidden rotation_4 0 1 0 1.5706715350893732
+  hidden translation_5 0 0.135 0
+  hidden rotation_5 0 0 1 4.1534794362219075e-05
+  hidden translation_6 0 0 0.12
+  hidden rotation_6 0 -1 0 2.6156355918219205e-05
+  hidden translation_8 -0.0455 0.0214 0.036
+  hidden rotation_8 0.7068252250566868 0.7073882252423417 3.4719215644233327e-06 3.141598944592624
+  hidden translation_9 0.02 0 0
+  hidden rotation_9 0 0 1 0
+  hidden translation_10 0.05 -0.028 0
+  hidden rotation_10 0 0 -1 0.5199999989324885
+  hidden translation_11 0.039 0 0
+  hidden translation_12 -0.0455 0.0214 -0.036
+  hidden rotation_12 0.7068252250566868 0.7073882252423417 3.4719215693161355e-06 3.1415989445926336
+  hidden translation_13 0.02 0 0
+  hidden rotation_13 0 0 1 0
+  hidden translation_14 0.05 -0.028 0
+  hidden rotation_14 0 0 -1 0.5199999989325118
+  hidden translation_15 0.039 0 0
+  hidden translation_16 0.02 0 0
+  hidden rotation_16 0 0 1 4.2252084251516616e-07
+  hidden translation_17 0.05 -0.028 0
+  hidden rotation_17 0 0 -1 0.5199999384644706
+  hidden translation_18 0.039 0 0
+  translation -4.21 0.54 2.1
+  rotation 0.5773509358554485 0.5773509358554485 0.5773489358556708 -2.094395307179586
+  controller "ure_can_grasper"
+  selfCollision FALSE
+  toolSlot [
+    Robotiq3fGripper {
+    }
+    DistanceSensor {
+      translation 0 0.1 0
+      rotation 0 0 1 1.570796
+    }
+  ]
+}
+ConveyorBelt {
+  translation -3.93 0.07 0.17
+  rotation 0 -1 0 -1.5708053071795867
+  size 3 0.3 0.7
+  appearance CorrugatedMetal {
+    textureTransform TextureTransform {
+      scale 6 3.1
+    }
+  }
+  borderHeight 0
+  speed 0.2
+}
+ConveyorBelt {
+  hidden translation_1 0 0.22493721603840108 0
+  translation -4.23 0 3.05
+  rotation 0 -1 0 -5.307179586466759e-06
+  name "conveyor belt(1)"
+  size 2 0.3 0.5
+  appearance CorrugatedMetal {
+    textureTransform TextureTransform {
+      scale 6 3.1
+    }
+  }
+  borderHeight 0
+  speed 0.062
+  acceleration 0.012
+  timer 90
+}
+PlasticCrate {
+  translation 7.084650002017421 -0.00019619999999997972 3.869999996777747
+  rotation 2.231866387276588e-18 0.9999999999999999 4.5753104434122664e-18 1.5707999972560838
+  size 0.6 0.4 0.45
+  mass 1
+}
+PlasticCrate {
+  translation 6.474649999999929 -0.00019619999999995197 3.8199900000001974
+  rotation 5.222630956849714e-19 1 1.062283051976704e-18 1.570799980688101
+  name "plastic crate(1)"
+  size 0.6 0.4 0.45
+  mass 1
+}
+Wall3 {
+  hidden position_0_0 136.90533189695847
+  hidden position_0_1 -91.17242565207792
+  hidden position_0_2 -1.3844063337748518
+  hidden linearVelocity_0 1.5577150181838564e-08 -9.838578167498311e-11 -1.9469739978792212e-08
+  hidden angularVelocity_0 1.6558116885574086e-09 1.4136106154596792e-07 -3.4720774744787e-09
+  hidden translation_1 -0.092086 0.015065 -0.033246
+  hidden rotation_1 1.0651928981967269e-07 -0.9199194145308135 -0.3921074734932685 3.1415929267465152
+  hidden linearVelocity_1 2.671408425990094e-08 5.908624043945343e-11 -7.693057392693919e-09
+  hidden angularVelocity_1 2.282380472232166e-09 1.4136081693987516e-07 -4.724174726041828e-09
+  hidden translation_2 0.092086 0.015065 -0.033246
+  hidden rotation_2 1 0 0 1.6484313515624496
+  hidden linearVelocity_2 -8.961481648784612e-10 4.333459365997397e-11 -2.151411152803751e-08
+  hidden angularVelocity_2 1.3240021859728025e-09 1.4136107670894305e-07 -2.8099935339824883e-09
+  hidden translation_3 0 -0.012469 0.060111
+  hidden rotation_3 -0.7698184221143486 -0.007784113243932649 0.6382154844207248 3.1228143601890603
+  hidden position_3_0 12368.01151639533
+  hidden linearVelocity_3 1.8872466013789185e-08 -3.0729526577535435e-10 -2.6461633395317835e-08
+  hidden angularVelocity_3 -0.00042173312152096526 -0.12045648351822223 -0.00020378509100304687
+  hidden translation_4 0 0 0
+  hidden rotation_4 0 1 0 2.702831865904359
+  hidden linearVelocity_4 1.8684886396842888e-08 -3.0435614357487447e-10 -2.6607990802016064e-08
+  hidden angularVelocity_4 -1.8310771843344283e-05 -0.005235192696180005 -8.882929870592674e-06
+  translation -0.22729503042381755 0.019348302264263692 0.5280675486532438
+  rotation -0.01662148825324959 0.9998097579338144 0.01020656987309974 1.1068615549924292
+  controller "<extern>"
+  bodySlot [
+    Lidar {
+      translation 0 0.39 0
+      rotation 0 1 0 3.141592653589793
+      rotationStep 0.0175
+      tiltAngle -0.1
+      horizontalResolution 360
+      numberOfLayers 1
+      maxRange 2
+      type "rotating"
+      defaultFrequency 18
+    }
+    InertialUnit {
+    }
+    GPS {
+    }
+  ]
+}
