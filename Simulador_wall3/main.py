@@ -1,7 +1,6 @@
 ## Simulador de algoritmos de control implementado en Ros-Webots##
 ## Para mayor informacion visitar #
 
-import cv2
 from controller import *
 import numpy as np
 from numpy.linalg import inv
