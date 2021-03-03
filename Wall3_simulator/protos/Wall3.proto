@@ -1,0 +1,226 @@
+#VRML_SIM R2020b utf8
+# license: Apache License 2.0
+# license url: http://www.apache.org/licenses/LICENSE-2.0
+# This is a proto file for Webots for the Wall3
+# Extracted from: wall3.urdf
+
+PROTO Wall3 [
+  field  SFVec3f     translation     0 0 0
+  field  SFRotation  rotation        1 0 0 -1.5708
+  field  SFString    name            "Wall3"  # Is `Robot.name`.
+  field  SFString    controller      "void"   # Is `Robot.controller`.
+  field  MFString    controllerArgs  []       # Is `Robot.controllerArgs`.
+  field  SFString    customData      ""       # Is `Robot.customData`.
+  field  SFBool      supervisor      FALSE    # Is `Robot.supervisor`.
+  field  SFBool      synchronization TRUE     # Is `Robot.synchronization`.
+  field  SFBool      selfCollision   FALSE    # Is `Robot.selfCollision`.
+  field MFNode     bodySlot        []           
+]
+{
+  Robot {
+    translation IS translation
+    rotation IS rotation
+    controller IS controller
+    controllerArgs IS controllerArgs
+    customData IS customData
+    supervisor IS supervisor
+    synchronization IS synchronization
+    selfCollision IS selfCollision
+    children [
+      Wall3_base_linkMesh {
+      }
+      HingeJoint {
+        jointParameters HingeJointParameters {
+          axis 1.000000 0.000000 0.000000
+          anchor -0.092086 0.015065 -0.033246
+          dampingConstant 0.0
+          staticFriction 0.0
+        }
+        device [
+          RotationalMotor {
+            name "whel1_joint"
+            maxTorque 10000
+          }
+          PositionSensor {
+            name "whel1_joint_sensor"
+          }
+        ]
+        endPoint Solid {
+          translation -0.092086 0.015065 -0.033246
+          rotation 0.000000 -0.484247 -0.874931 3.141593
+          children [
+            Wall3_whel1_linkMesh {
+            }
+          ]
+          name "whel1_link"
+          boundingObject Transform {
+            translation 0.019664 -0.000000 0.000000
+            rotation 0 0 1 1.5708
+            children [
+              Cylinder {
+                                  height 0.015
+                                  radius 0.034
+                                  subdivision 24
+                                    }
+            ]
+          }
+          physics Physics {
+            density -1
+            mass 0.031545
+            centerOfMass [ 0.017159 -0.000000 0.000001 ]
+            inertiaMatrix [
+              2.176800e-05 1.168500e-05 1.169700e-05
+              -5.359300e-09 -3.976200e-12 -3.528800e-10
+            ]
+          }
+        }
+      }
+      HingeJoint {
+        jointParameters HingeJointParameters {
+          axis -1.000000 0.000000 0.000000
+          anchor 0.092086 0.015065 -0.033246
+          dampingConstant 0.0
+          staticFriction 0.0
+        }
+        device [
+          RotationalMotor {
+            name "whel2_joint"
+            maxTorque 10000
+          }
+          PositionSensor {
+            name "whel2_joint_sensor"
+          }
+        ]
+        endPoint Solid {
+          translation 0.092086 0.015065 -0.033246
+          rotation -1.000000 0.000000 0.000000 1.559400
+          children [
+            Wall3_whel2_linkMesh {
+            }
+          ]
+          name "whel2_link"
+          boundingObject Transform {
+            translation 0.019664 -0.000000 0.000000
+            rotation 0 0 1 1.5708
+            children [
+              Cylinder {
+                                  height 0.015
+                                  radius 0.034
+                                  subdivision 24
+                                    }
+            ]
+          }
+          physics Physics {
+            density -1
+            mass 0.031545
+            centerOfMass [ 0.017159 -0.000000 0.000001 ]
+            inertiaMatrix [
+              2.176811e-05 1.168517e-05 1.169741e-05
+              -5.357356e-09 -1.115488e-11 -3.983112e-10
+            ]
+          }
+        }
+      }
+      HingeJoint {
+        jointParameters HingeJointParameters {
+          axis 0.000000 -0.999703 -0.024390
+          anchor 0.000000 -0.012469 0.060111
+          dampingConstant 0.0
+          staticFriction 0.0
+        }
+
+        endPoint Solid {
+          translation 0.000000 -0.012469 0.060111
+          rotation -1.000000 0.000000 0.000000 3.117200
+          children [
+            Wall3_whel3_linkMesh {
+            }
+            HingeJoint {
+              jointParameters HingeJointParameters {
+                axis 0.000000 1.000000 0.000000
+                anchor 0.000000 0.000000 0.000000
+                dampingConstant 0.0
+                staticFriction 0.0
+              }
+
+              endPoint Solid {
+                translation 0.000000 0.000000 0.000000
+                rotation 0.000000 1.000000 0.000000 0.000000
+                children [
+                  Wall3_crazy_linkMesh {
+                  }
+                ]
+                name "crazy_link"
+                boundingObject Transform {
+                  translation 0.000000 0.003862 -0.000005
+                  rotation 0.000000 1.000000 0.000000 0.000000
+                  children [
+                  
+                  Sphere{
+                  radius 0.005
+                  subdivision 2
+                  ico TRUE
+                  }
+                   
+                  ]
+                }
+                physics Physics {
+                  density -1
+                  mass 0.003529
+                  centerOfMass [ 0.000000 0.003863 0.000000 ]
+                  inertiaMatrix [
+                    3.202000e-08 3.202000e-08 3.202000e-08
+                    -1.050300e-39 4.798600e-25 3.761600e-37
+                  ]
+                }
+              }
+            }
+          ]
+          name "whel3_link"
+          boundingObject Transform {
+            translation 0.000000 -0.000667 0.000000
+            rotation 0.000000 1.000000 0.000000 0.000000
+            children [
+              Box {
+                size 0.032000 0.004667 0.020000
+              }
+            ]
+          }
+          physics Physics {
+            density -1
+            mass 0.005114
+            centerOfMass [ 0.000000 -0.003411 -0.000000 ]
+            inertiaMatrix [
+              2.161600e-07 5.698600e-07 4.411200e-07
+              -3.932100e-12 4.489300e-13 4.723700e-12
+            ]
+          }
+        }
+      }
+      
+        Group {
+      
+        children IS bodySlot
+      }
+    ]
+    name IS name 
+    boundingObject Transform {
+      translation 0.000000 0.184676 0.040154
+      rotation 0.000000 1.000000 0.000000 0.000000
+      children [
+        Box {
+          size 0.17 0.3 0.22
+        }
+      ]
+    }
+    physics Physics {
+      density -1
+      mass 2.220225
+      centerOfMass [ 0.001526 0.123659 0.008122 ]
+      inertiaMatrix [
+        5.709879e-03 9.076552e-03 7.636076e-03
+        5.057171e-07 -8.012304e-06 -4.870813e-04
+      ]
+    }
+  }
+}
